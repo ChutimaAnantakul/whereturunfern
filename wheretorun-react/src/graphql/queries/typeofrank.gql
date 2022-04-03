@@ -1,0 +1,14 @@
+query typeofrank($id:UUID!){
+  typeofrank(id:$id){
+    id
+    ranknameTh
+    ranknameEn
+     andranktypes{
+      nodes{
+        typeoftype{
+          typeoftypeTh
+        }
+      }
+    }
+  }
+}

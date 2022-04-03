@@ -1,0 +1,34 @@
+query uploads{
+  uploads(
+    orderBy: EVENT_ID_ASC
+    filter: {status:{equalTo:false}}
+    ){
+    totalCount
+    nodes{
+      id
+      fileIacard
+      fileEvent
+      iacardName
+      eventName
+      status
+      userId
+      user{
+        id
+        firstname
+        lastname
+        email
+        password
+        gender
+        phone
+        idcard
+        birthdate
+        profileimageurl
+      }eventId
+      event{
+        id
+        eventnameTh
+      }
+    }
+  }
+}
+

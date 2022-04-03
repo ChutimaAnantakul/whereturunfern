@@ -1,0 +1,17 @@
+mutation deleteCategoryevent($id: UUID!) {
+  deleteCategoryevent(input: { id: $id }) {
+    categoryevent {
+      id
+      eventId
+      event {
+        id
+        eventnameTh
+      }
+      categoryId
+      category {
+        id
+        categorynameTh
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+mutation createEnvironmentevents($eventId:UUID!,$environmentId:UUID!){
+  createEnvironmentevent(input:{environmentevent:{eventId:$eventId,environmentId:$environmentId}}){
+    environmentevent{
+      eventId
+      environmentId
+      event{
+        eventnameTh
+        eventnameEn
+      }environment{
+        environmentTh
+        environmentEn
+      }
+}
+  }}
+  

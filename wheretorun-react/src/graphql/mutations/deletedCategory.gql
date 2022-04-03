@@ -1,0 +1,9 @@
+mutation delcategory($id: UUID!) {
+  deleteCategory(input: { id: $id }) {
+    category {
+      id
+      categorynameTh
+      categorynameEn
+    }
+  }
+}

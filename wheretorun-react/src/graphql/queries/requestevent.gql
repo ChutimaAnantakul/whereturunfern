@@ -1,0 +1,27 @@
+query requestevent {
+  events(orderBy: EVENTNAME_TH_ASC
+  #  filter: { status: { equalTo: true } }
+   ) {
+    nodes {
+      id
+      eventnameTh
+      eventnameEn
+    }
+  }
+  uploads(
+    orderBy: EVENT_ID_ASC
+    filter: {status:{equalTo:false}}
+    ){
+    nodes{
+      fileEvent
+      fileIacard
+      status
+      eventId
+      event{
+        id
+        eventnameTh
+        eventnameEn
+      }
+    }
+  }
+}

@@ -1,0 +1,120 @@
+query events(
+  $eventnameTh: String!,
+  $hashtag: String!,
+  $provinceId:[UUID!],
+) {
+  events(
+    orderBy: APPLICATIONDEADLINE_ASC
+    filter: {status:{equalTo:true}or: [
+    { and: [ { eventnameTh: { includes: $eventnameTh } }, { hashtag: { includes: $hashtag } } ] },
+    { and:  { provinceId: { in: $provinceId } }  }
+  ]}) {
+    totalCount
+    nodes {
+      id
+      eventnameTh
+      eventnameEn
+      locationTh
+      locationEn
+      linkurl
+      coverphotourl
+      startdate
+      enddate
+      openforapplications
+      applicationdeadline
+      descriptionTh
+      descriptionEn
+      hashtag
+      organizer
+      latitude
+      longitude
+      poster
+      awardphoto
+      shirtsize
+      facebookurl
+      provinceId 
+      province {
+        provinceTh
+        provinceEn
+      }
+      yearId
+      year {
+        year
+      }
+      eventgroupId
+    }
+  }
+  environments(
+    orderBy: ENVIRONMENT_TH_ASC) {
+    nodes {
+      id
+      environmentTh
+      environmentEn
+      environmentevents {
+        nodes {
+          id
+          environmentId
+          event {
+            id
+            eventnameTh
+            eventnameEn
+            locationTh
+            locationEn
+            coverphotourl
+            startdate
+            enddate
+            openforapplications
+            applicationdeadline
+            organizer
+            hashtag
+            provinceId
+            province {
+              provinceTh
+              provinceEn
+            }
+          }
+        }
+      }
+    }
+  }
+  categories(
+    orderBy: CATEGORYNAME_TH_ASC) {
+    nodes {
+      id
+      categorynameTh
+      categorynameEn
+      categoryevents{
+        nodes{
+          categoryId
+          event{
+              id
+            eventnameTh
+            eventnameEn
+            locationTh
+            locationEn
+            coverphotourl
+            startdate
+            enddate
+            openforapplications
+            applicationdeadline
+            organizer
+            hashtag
+            provinceId
+            province {
+              provinceTh
+              provinceEn
+            }
+          }
+        }
+      }
+    }
+  } 
+  
+  provinces(orderBy:PROVINCE_TH_ASC){
+    nodes{
+      id
+      provinceTh
+      provinceEn
+    }
+  }
+}

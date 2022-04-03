@@ -1,0 +1,11 @@
+mutation deleterace($id: UUID!) {
+  deleteRace(input: { id: $id }) {
+    race {
+      id
+      raceTh
+      raceEn
+      distance
+      price
+    }
+  }
+}

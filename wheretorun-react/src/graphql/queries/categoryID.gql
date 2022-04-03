@@ -1,0 +1,7 @@
+query categoryid($id: UUID!) {
+  category(id: $id) {
+    id
+    categorynameTh
+    categorynameEn
+  }
+}

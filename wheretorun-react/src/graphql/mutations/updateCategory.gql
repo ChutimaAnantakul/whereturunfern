@@ -1,0 +1,21 @@
+mutation EditCategory(
+  $id: UUID!
+  $categorynameTh: String!
+  $categorynameEn: String!
+) {
+  updateCategory(
+    input: {
+      id: $id
+      patch: {
+        categorynameTh: $categorynameTh
+        categorynameEn: $categorynameEn
+      }
+    }
+  ) {
+    category {
+      id
+      categorynameTh
+      categorynameEn
+    }
+  }
+}

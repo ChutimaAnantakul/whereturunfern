@@ -1,0 +1,19 @@
+mutation updateUpload(
+  $id: UUID!,
+  $status: Boolean
+) {
+  updateUpload(
+    input: {
+      id: $id
+      patch: {
+        status: $status
+      }
+    }
+  ) {
+    upload {
+      id
+      status
+    }
+  }
+}
+

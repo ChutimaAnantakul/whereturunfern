@@ -1,0 +1,22 @@
+
+mutation createEventtypeofrank($eventId: UUID!, $rankingId: UUID!) {
+  createEventranking(
+    input: { eventranking: { eventId: $eventId, rankingId: $rankingId } }
+  ) {
+    eventranking {
+      eventId
+      event {
+        eventnameTh
+        eventnameEn
+      }
+      rankingId
+      ranking {
+        rankscore
+        typerank{
+          ranknameTh
+          ranknameEn
+        }
+      }
+    }
+  }
+}

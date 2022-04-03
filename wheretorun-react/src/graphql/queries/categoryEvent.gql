@@ -1,0 +1,83 @@
+query categoryevmraceqwq {
+  events(orderBy: EVENTNAME_TH_ASC
+  #  filter: { status: { equalTo: true } }
+   ) {
+    nodes {
+      id
+      eventnameTh
+      eventnameEn
+      status
+    }
+  }
+  categories(orderBy: CATEGORYNAME_TH_ASC) {
+    nodes {
+      id
+      categorynameTh
+      categorynameEn
+    }
+  }
+  categoryevents(orderBy: EVENT_ID_ASC) {
+    totalCount
+    nodes {
+      id
+      categoryId
+      category {
+        categorynameTh
+        categorynameEn
+      }
+      eventId
+      event {
+        eventnameTh
+        eventnameEn
+      }
+    }
+  }
+  environments(orderBy: ENVIRONMENT_TH_ASC) {
+    nodes {
+      id
+      environmentTh
+      environmentEn
+    }
+  }
+  environmentevents(orderBy: EVENT_ID_ASC) {
+    totalCount
+    nodes {
+      id
+      eventId
+      event {
+        eventnameTh
+      }
+      environmentId
+      environment {
+        environmentTh
+        environmentEn
+      }
+    }
+  }
+  races(orderBy: RACE_TH_ASC) {
+    nodes {
+      id
+      raceTh
+      raceEn
+      distance
+      price
+    }
+  }
+  racetypeevents(orderBy: EVENT_ID_ASC) {
+    totalCount
+    nodes {
+      id
+      raceId
+      race {
+        raceTh
+        distance
+        price
+      }
+      eventId
+      event {
+        eventnameTh
+        eventnameEn
+      }
+    }
+  }
+}

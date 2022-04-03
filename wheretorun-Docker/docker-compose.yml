@@ -1,0 +1,42 @@
+version: "3.8"
+services:
+  db:
+    image: postgres:13.3
+    ports:
+      - 5432:5352
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: local
+  postgraphile:
+    image: graphile/postgraphile:v4.12.3
+    build: .
+    ports:
+      - 5000:5000
+    environment:
+      DATABASE_URL: postgres://postgres:local@db
+    depends_on:
+      - db
+    command: 
+      ["--watch","--cors","--append-plugins","@graphile-contrib/pg-simplify-inflector,postgraphile-plugin-connection-filter"]
+      # ["--watch",
+      # "--cors",
+      # "--append-plugins",
+      # "@graphile-contrib/pg-simplify-inflector,postgraphile-plugin-connection-filter",
+      #  "--schema", "public",
+      # "--jwt-token-identifier", "public.jwt_token",
+      # "--jwt-secret", "superSecretRandom",
+      # "--default-role", "anonymous",
+      # "--show-error-stack"]
+  pgadmin:
+    image: dpage/pgadmin4:5.5
+    ports: 
+      - 8080:80
+    environment: 
+      PGADMIN_DEFAULT_EMAIL: jirawan@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: local
+    depends_on:
+      - db
+volumes:
+  pg_data:

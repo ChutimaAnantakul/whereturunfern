@@ -1,0 +1,19 @@
+mutation deleteRacetypeevent($id: UUID!) {
+  deleteRacetypeevent(input: { id: $id }) {
+    racetypeevent {
+      id
+      eventId
+      event {
+        id
+        eventnameTh
+      }
+      raceId
+      race {
+        id
+        raceTh
+        distance
+        price
+      }
+    }
+  }
+}

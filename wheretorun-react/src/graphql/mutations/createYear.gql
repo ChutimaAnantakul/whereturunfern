@@ -1,0 +1,8 @@
+mutation createYear($year: Int!) {
+  createYear(input: { year: { year: $year } }) {
+    year {
+      id
+      year
+    }
+  }
+}

@@ -1,0 +1,8 @@
+query eventgroupid($id: UUID!) {
+  eventgroup(id: $id) {
+    id
+    eventgroupnameTh
+    eventgroupnameEn
+    eventGroupImageUrl
+  }
+}

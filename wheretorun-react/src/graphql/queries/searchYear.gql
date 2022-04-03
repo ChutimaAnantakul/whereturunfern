@@ -1,0 +1,37 @@
+query searchyear {
+  years(orderBy: YEAR_DESC) {
+    nodes {
+      year
+      events(orderBy: EVENTNAME_EN_ASC) {
+        nodes {
+          id
+          eventnameTh
+          eventnameEn
+          locationTh
+          locationEn
+          linkurl
+          coverphotourl
+          startdate
+          enddate
+          openforapplications
+          applicationdeadline
+          descriptionTh
+          descriptionEn
+          hashtag
+          organizer
+          latitude
+          longitude
+          poster
+          awardphoto
+          shirtsize
+          facebookurl
+          provinceId
+          province {
+            provinceTh
+            provinceEn
+          }
+        }
+      }
+    }
+  }
+}

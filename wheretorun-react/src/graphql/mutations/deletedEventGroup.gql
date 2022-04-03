@@ -1,0 +1,10 @@
+mutation deleventgroup($id: UUID!) {
+  deleteEventgroup(input: { id: $id }) {
+    eventgroup {
+      id
+      eventgroupnameTh
+      eventgroupnameEn
+      eventGroupImageUrl
+    }
+  }
+}

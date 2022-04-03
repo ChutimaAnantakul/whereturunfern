@@ -1,0 +1,18 @@
+mutation EditEnvironment(
+  $id: UUID!
+  $environmentTh: String!
+  $environmentEn: String!
+) {
+  updateEnvironment(
+    input: {
+      id: $id
+      patch: { environmentTh: $environmentTh, environmentEn: $environmentEn }
+    }
+  ) {
+    environment {
+      id
+      environmentTh
+      environmentEn
+    }
+  }
+}

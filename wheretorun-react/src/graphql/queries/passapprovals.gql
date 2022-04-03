@@ -1,0 +1,32 @@
+query passtapproval{
+  requestapprovals(
+    orderBy: EVENT_ID_ASC
+    filter: {status:{equalTo:true}}
+    ){
+    nodes{
+      id
+      fileIacard
+      fileEvent
+      status
+      userId
+      user{
+        id
+        firstname
+        lastname
+        email
+        password
+        gender
+        phone
+        idcard
+        birthdate
+        profileimageurl
+      }eventId
+      event{
+        id
+        eventnameTh
+      }
+    }
+  }
+}
+
+

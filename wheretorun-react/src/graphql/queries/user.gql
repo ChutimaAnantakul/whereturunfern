@@ -1,0 +1,43 @@
+query user($id:UUID!){
+  user(id:$id){
+    id
+    firstname
+    lastname
+    email
+    phone
+    gender
+    phone
+    idcard
+    birthdate
+    profileimageurl  
+    uploads{
+      nodes{
+        id
+        iacardName
+        eventName
+        event{
+          eventnameTh
+          eventnameEn
+          locationTh
+          locationEn
+          startdate
+          enddate
+          racetypeevents{
+            nodes{
+              id
+              race{
+                raceTh
+                raceEn
+                price
+                distance
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+}
+
+

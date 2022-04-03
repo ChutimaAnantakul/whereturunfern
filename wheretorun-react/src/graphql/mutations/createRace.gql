@@ -1,0 +1,11 @@
+mutation creaceRace($raceTh:String!,$raceEn:String!,$price:Int!,$distance:Float!){
+  createRace(input:{race:{raceTh:$raceTh,raceEn:$raceEn,price:$price,distance:$distance}}){
+    race{
+      id
+      raceTh
+      raceEn
+      price
+      distance
+    }
+  }
+}

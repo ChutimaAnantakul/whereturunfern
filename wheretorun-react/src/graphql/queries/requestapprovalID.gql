@@ -1,0 +1,27 @@
+query requestapprovalID($id:UUID!){
+  requestapproval(id:$id){
+    id
+    fileIacard
+      fileEvent
+      status
+      userId
+      user{
+        id
+        firstname
+        lastname
+        email
+        password
+        gender
+        phone
+        idcard
+        birthdate
+        profileimageurl
+      }eventId
+      event{
+        id
+        eventnameTh
+      }
+  }
+  
+}
+

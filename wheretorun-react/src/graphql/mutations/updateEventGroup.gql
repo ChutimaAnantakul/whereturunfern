@@ -1,0 +1,10 @@
+mutation EditEventgroup($id:UUID!,$eventgroupnameTh:String!,$eventgroupnameEn:String!,$eventGroupImageUrl:String!){
+  updateEventgroup(input:{id:$id,patch:{eventgroupnameTh:$eventgroupnameTh,eventgroupnameEn:$eventgroupnameEn,eventGroupImageUrl:$eventGroupImageUrl}}){
+    eventgroup{
+      id
+      eventgroupnameTh
+      eventgroupnameEn
+      eventGroupImageUrl
+    }
+  }
+}

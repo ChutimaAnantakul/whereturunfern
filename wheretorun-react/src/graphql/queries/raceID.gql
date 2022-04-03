@@ -1,0 +1,9 @@
+query race($id: UUID!) {
+  race(id: $id) {
+    id
+    raceTh
+    raceEn
+    distance
+    price
+  }
+}

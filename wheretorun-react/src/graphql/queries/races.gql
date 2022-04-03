@@ -1,0 +1,12 @@
+query races {
+  races(orderBy: RACE_TH_ASC) {
+    totalCount
+    nodes {
+      id
+      raceTh
+      raceEn
+      distance
+      price
+    }
+  }
+}

@@ -1,0 +1,20 @@
+mutation updateEventAvg(
+  $id: UUID!
+  $avgrankscore: Float!
+) 
+
+{
+  updateEvent(
+    input: {
+      id: $id
+      patch: {
+        avgrankscore: $avgrankscore
+      }
+    }
+  ) {
+    event {
+      id
+      avgrankscore
+    }
+  }
+}

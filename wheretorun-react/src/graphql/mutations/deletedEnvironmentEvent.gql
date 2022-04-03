@@ -1,0 +1,17 @@
+mutation deleteEnvironmentevent($id: UUID!) {
+  deleteEnvironmentevent(input: { id: $id }) {
+    environmentevent {
+      id
+      eventId
+      event {
+        id
+        eventnameTh
+      }
+      environmentId
+      environment {
+        id
+        environmentTh
+      }
+    }
+  }
+}

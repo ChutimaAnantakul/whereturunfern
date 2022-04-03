@@ -1,0 +1,18 @@
+mutation createdenent($eventId: UUID!, $categoryId: UUID!) {
+  createCategoryevent(
+    input: { categoryevent: { eventId: $eventId, categoryId: $categoryId } }
+  ) {
+    categoryevent {
+      eventId
+      event {
+        eventnameTh
+        eventnameEn
+      }
+      categoryId
+      category {
+        categorynameTh
+        categorynameEn
+      }
+    }
+  }
+}

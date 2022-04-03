@@ -1,0 +1,27 @@
+mutation Editrace(
+  $id: UUID!
+  $raceTh: String!
+  $raceEn: String!
+  $distance: Float!
+  $price: Int!
+) {
+  updateRace(
+    input: {
+      id: $id
+      patch: {
+        raceTh: $raceTh
+        raceEn: $raceEn
+        distance: $distance
+        price: $price
+      }
+    }
+  ) {
+    race {
+      id
+      raceTh
+      raceEn
+      distance
+      price
+    }
+  }
+}

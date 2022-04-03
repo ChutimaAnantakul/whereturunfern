@@ -1,0 +1,19 @@
+mutation UpdateRequestApprovals(
+  $id: UUID!,
+  $status: Boolean
+) {
+  updateRequestapproval(
+    input: {
+      id: $id
+      patch: {
+        status: $status
+      }
+    }
+  ) {
+    requestapproval {
+      id
+      status
+    }
+  }
+}
+

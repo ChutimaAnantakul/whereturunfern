@@ -1,0 +1,20 @@
+mutation updateFollow(
+  $id: UUID!
+  $followname: Boolean!
+) 
+
+{
+  updateEventgroup(
+    input: {
+      id: $id
+      patch: {
+        followname: $followname
+      }
+    }
+  ) {
+    eventgroup {
+      id
+      followname
+    }
+  }
+}

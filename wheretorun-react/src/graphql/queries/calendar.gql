@@ -1,0 +1,43 @@
+query Calendar($startdate: Date!, $enddate: Date!) {
+  events(
+    orderBy: STARTDATE_ASC
+    filter: { startdate: { greaterThanOrEqualTo: $startdate }, enddate:{lessThanOrEqualTo: $enddate} }
+  ) {
+    totalCount
+    nodes {
+      id
+       eventnameTh
+      eventnameEn
+      locationTh
+      locationEn
+      linkurl
+      coverphotourl
+      startdate
+      enddate
+      openforapplications
+      applicationdeadline
+      descriptionTh
+      descriptionEn
+      hashtag
+      organizer
+      latitude
+      longitude
+      poster
+      awardphoto
+      shirtsize
+      facebookurl
+      provinceId 
+      province {
+        provinceTh
+        provinceEn
+      }
+      yearId
+      year {
+        year
+      }
+      eventgroupId
+    }
+  }
+}
+
+

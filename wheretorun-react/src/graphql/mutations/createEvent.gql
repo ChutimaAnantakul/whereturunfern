@@ -1,0 +1,90 @@
+mutation createEvent(
+  $eventnameTh: String!
+  $eventnameEn: String!
+  $locationTh: String!
+  $locationEn: String!
+  $linkurl: String!
+  $coverphotourl: String!
+  $startdate: Date!
+  $enddate: Date!
+  $descriptionTh: String!
+  $descriptionEn: String!
+  $hashtag: String!
+  $yearId: UUID!
+  $organizer: String!
+  $latitude: Float!
+  $longitude: Float!
+  $awardphoto: String!
+  $shirtsize: String!
+  $poster: String!
+  $provinceId: UUID!
+  $openforapplications: Date!
+  $applicationdeadline: Date!
+  $facebookurl: String!
+  $eventgroupId: UUID!
+) {
+  createEvent(
+    input: {
+      event: {
+        eventnameTh: $eventnameTh
+        eventnameEn: $eventnameEn
+        locationTh: $locationTh
+        locationEn: $locationEn
+        linkurl: $linkurl
+        coverphotourl: $coverphotourl
+        startdate: $startdate
+        enddate: $enddate
+        descriptionTh: $descriptionTh
+        openforapplications: $openforapplications
+        applicationdeadline: $applicationdeadline
+        facebookurl: $facebookurl
+        descriptionEn: $descriptionEn
+        hashtag: $hashtag
+        organizer: $organizer
+        latitude: $latitude
+        longitude: $longitude
+        poster: $poster
+        awardphoto: $awardphoto
+        shirtsize: $shirtsize
+        provinceId: $provinceId
+        yearId: $yearId
+        eventgroupId: $eventgroupId
+        adminId: "c163d0f2-42c9-4072-9746-2cc6d016b9da"
+        status:true
+        avgrankscore: 0
+      }
+    }
+  ) {
+    event {
+      id
+      eventnameTh
+      eventnameEn
+      locationTh
+      locationEn
+      linkurl
+      coverphotourl
+      startdate
+      enddate
+      openforapplications
+      applicationdeadline
+      descriptionTh
+      descriptionEn
+      hashtag
+      organizer
+      latitude
+      longitude
+      poster
+      awardphoto
+      shirtsize
+      facebookurl
+      provinceId
+      yearId
+      eventgroupId
+      adminId
+      status
+      avgrankscore
+    }
+  }
+}
+
+  

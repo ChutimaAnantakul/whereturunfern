@@ -1,0 +1,10 @@
+query admin($id:UUID!){
+  admin(id:$id){
+    id
+    firstname
+    lastname
+    email
+    password   
+    profileimageurl
+  }  
+}

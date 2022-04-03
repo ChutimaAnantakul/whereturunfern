@@ -1,0 +1,18 @@
+mutation createRacetypeevent($eventId: UUID!, $raceId: UUID!) {
+  createRacetypeevent(
+    input: { racetypeevent: { eventId: $eventId, raceId: $raceId } }
+  ) {
+    racetypeevent {
+      eventId
+      event {
+        eventnameTh
+        eventnameEn
+      }
+      raceId
+      race {
+        raceTh
+        raceEn
+      }
+    }
+  }
+}

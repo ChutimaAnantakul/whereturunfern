@@ -1,0 +1,7 @@
+query environmentid($id: UUID!) {
+  environment(id: $id) {
+    id
+    environmentTh
+    environmentEn
+  }
+}

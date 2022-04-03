@@ -1,0 +1,25 @@
+mutation createUser ($firstname: String!,$lastname: String!,$email: String!,$password: String!,$phone: String!,$idcard: String!,$gender: String!, $birthdate: Date!){
+  createUser(input:{user:{firstname:$firstname ,lastname:$lastname,email:$email,password:$password,
+  phone:$phone, idcard:$idcard,gender:$gender,birthdate:$birthdate,profileimageurl:null}}){
+    user{
+      id
+      firstname
+      lastname
+      email
+      phone
+      password
+      gender
+      profileimageurl
+      idcard
+      birthdate
+    }
+  } 
+}
+  
+
+
+# mutation signup ($firstname: String!,$lastname: String!,$email: String!,$password: String!,$phone: String!,$idcard: String!,$gender: String!, $birthdate: Date!)
+# {signup(input:{firstname:$firstname ,lastname:$lastname,email:$email,password:$password,
+#   phone:$phone, idcard:$idcard,gender:$gender,birthdate:$birthdate,profileimageurl:null}){
+#     jwtToken}
+# }

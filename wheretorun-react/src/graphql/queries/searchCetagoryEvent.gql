@@ -1,0 +1,108 @@
+query eventsejdjd {
+  events(
+    orderBy: APPLICATIONDEADLINE_ASC) {
+    totalCount
+    nodes {
+      id
+      eventnameTh
+      eventnameEn
+      locationTh
+      locationEn
+      linkurl
+      coverphotourl
+      startdate
+      enddate
+      openforapplications
+      applicationdeadline
+      descriptionTh
+      descriptionEn
+      hashtag
+      organizer
+      latitude
+      longitude
+      poster
+      status
+      awardphoto
+      shirtsize
+      facebookurl
+      provinceId 
+      province {
+        provinceTh
+        provinceEn
+      }
+      yearId
+      year {
+        year
+      }
+      eventgroupId
+    }
+  }
+  environments(
+    orderBy: ENVIRONMENT_TH_ASC) {
+    nodes {
+      id
+      environmentTh
+      environmentEn
+      environmentevents {
+        totalCount
+        nodes {
+          id
+          environmentId
+          event{
+            id
+            eventnameTh
+            eventnameEn
+            locationTh
+            locationEn
+            coverphotourl
+            startdate
+            enddate
+            openforapplications
+            applicationdeadline
+            organizer
+            hashtag
+            status
+            provinceId
+            province {
+              provinceTh
+              provinceEn
+            }
+          }
+        }
+      }
+    }
+  }
+  categories(
+    orderBy: CATEGORYNAME_TH_ASC) {
+    nodes {
+      id
+      categorynameTh
+      categorynameEn
+      categoryevents{
+        nodes{
+          categoryId
+          event{
+              id
+            eventnameTh
+            eventnameEn
+            locationTh
+            locationEn
+            coverphotourl
+            startdate
+            enddate
+            openforapplications
+            applicationdeadline
+            organizer
+            hashtag
+            status
+            provinceId
+            province {
+              provinceTh
+              provinceEn
+            }
+          }
+        }
+      }
+    }
+  } 
+}

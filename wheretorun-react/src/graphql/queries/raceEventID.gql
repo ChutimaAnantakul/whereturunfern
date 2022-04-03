@@ -1,0 +1,48 @@
+query raceeventID($id: UUID!) {
+  racetypeevent(id: $id) {
+    id
+    eventId
+    event {
+      id
+      eventnameTh
+    }
+    raceId
+    race {
+      id
+      raceTh
+      distance
+      price
+    }
+  }
+  races {
+    nodes {
+      id
+      raceTh
+      distance
+      price
+    }
+  }
+  events {
+    nodes {
+      id
+      eventnameTh
+    }
+  }
+  racetypeevents {
+    totalCount
+    nodes {
+      id
+      eventId
+      event {
+        eventnameTh
+      }
+      raceId
+      race {
+        id
+        raceTh
+        distance
+        price
+      }
+    }
+  }
+}

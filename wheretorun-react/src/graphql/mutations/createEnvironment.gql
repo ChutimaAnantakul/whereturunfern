@@ -1,0 +1,9 @@
+mutation createEnvironment($environmentTh:String!,$environmentEn:String!){
+  createEnvironment(input:{environment:{environmentTh:$environmentTh,environmentEn:$environmentEn}}){
+    environment{
+      id
+      environmentTh
+      environmentEn
+    }
+  }
+}

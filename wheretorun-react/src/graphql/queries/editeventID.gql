@@ -1,0 +1,75 @@
+query eventID($id: UUID!) {
+  event(id: $id) {
+    id
+    eventnameTh
+    eventnameEn
+    locationTh
+    locationEn
+    linkurl
+    coverphotourl
+    startdate
+    enddate
+    openforapplications
+    applicationdeadline
+    descriptionTh
+    descriptionEn
+    hashtag
+    organizer
+    latitude
+    longitude
+    poster
+    awardphoto
+    shirtsize
+    facebookurl
+    yearId
+    year {
+      id
+      year
+    }
+    provinceId
+    province {
+      id
+      provinceTh
+      provinceEn
+    }
+    eventgroupId
+    eventgroup {
+      id
+      eventgroupnameTh
+      eventgroupnameEn
+    }
+    adminId
+    admin {
+      id
+      firstname
+      lastname
+    }
+    uploads{
+      nodes{
+        fileEvent
+        fileIacard
+        status
+      }
+    }
+  }
+  eventgroups {
+    nodes {
+      id
+      eventgroupnameTh
+      eventgroupnameEn
+    }
+  }
+  provinces(orderBy: PROVINCE_TH_ASC) {
+    nodes {
+      id
+      provinceTh
+      provinceEn
+    }
+  }
+  years(orderBy: YEAR_DESC) {
+    nodes {
+      id
+      year
+    }
+  }
+}

@@ -1,0 +1,10 @@
+query environment {
+  environments(orderBy: ENVIRONMENT_TH_ASC) {
+    totalCount
+    nodes {
+      id
+      environmentTh
+      environmentEn
+    }
+  }
+}

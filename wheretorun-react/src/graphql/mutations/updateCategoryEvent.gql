@@ -1,0 +1,11 @@
+mutation EditcategoryEvent($id: UUID!, $categoryId: UUID!, $eventId: UUID!) {
+  updateCategoryevent(
+    input: { id: $id, patch: { categoryId: $categoryId, eventId: $eventId } }
+  ) {
+    categoryevent {
+      id
+      categoryId
+      eventId
+    }
+  }
+}

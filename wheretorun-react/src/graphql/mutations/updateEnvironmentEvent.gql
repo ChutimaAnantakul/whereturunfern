@@ -1,0 +1,18 @@
+mutation EditEnvironmentevent(
+  $id: UUID!
+  $environmentId: UUID!
+  $eventId: UUID!
+) {
+  updateEnvironmentevent(
+    input: {
+      id: $id
+      patch: { environmentId: $environmentId, eventId: $eventId }
+    }
+  ) {
+    environmentevent {
+      id
+      environmentId
+      eventId
+    }
+  }
+}

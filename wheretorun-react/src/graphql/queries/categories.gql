@@ -1,0 +1,10 @@
+query category {
+  categories(orderBy:CATEGORYNAME_TH_ASC){
+    totalCount
+    nodes {
+      id
+      categorynameTh
+      categorynameEn
+    }
+  }
+}

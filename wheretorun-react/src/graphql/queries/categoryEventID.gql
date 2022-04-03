@@ -1,0 +1,51 @@
+# query categoryEventID($id: UUID!) {
+#   categoryevent(id: $id) {
+#     id
+#     eventId
+#     event {
+#       eventnameTh
+#     }
+#     categoryId
+#     category {
+#       categorynameTh
+#     }
+#   }
+# }
+
+
+query categoryEventID($id:UUID!){
+  categoryevent(id:$id){
+    id
+    eventId
+    event{
+      id
+      eventnameTh
+    }categoryId
+    category{
+      id
+      categorynameTh
+    }
+  }categories{
+    nodes{
+      id
+      categorynameTh
+    }
+  }events{
+    nodes{
+      id
+      eventnameTh
+    }
+  }categoryevents{
+    totalCount
+    nodes{
+      id
+      eventId
+      event{
+        eventnameTh
+      }categoryId
+      category{
+        categorynameTh
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+query eventgroup {
+    eventgroups(orderBy:EVENTGROUPNAME_TH_ASC){
+      totalCount
+      nodes{
+        id
+        eventgroupnameTh
+        eventgroupnameEn
+        eventGroupImageUrl
+      }
+    }
+    }
+  
+
+  # query eventgroup ($id:UUID!) {
+  # eventgroups(orderBy:EVENTGROUPNAME_TH_ASC){
+  #   nodes{
+  #     id
+  #     eventgroupnameTh
+  #     eventgroupnameEn
+  #     eventGroupImageUrl
+  #   }
+  # }eventgroup(id:$id){
+  #   id
+  #   eventgroupnameTh
+  #   eventgroupnameEn
+  #   eventGroupImageUrl
+  # }
+  # }
+  
+  

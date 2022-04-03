@@ -1,0 +1,9 @@
+mutation createCategory($categorynameTh:String!,$categorynameEn:String!){
+  createCategory(input:{category:{categorynameTh:$categorynameTh,categorynameEn:$categorynameEn}}){
+    category{
+      id
+      categorynameTh
+      categorynameEn
+    }
+  }
+}

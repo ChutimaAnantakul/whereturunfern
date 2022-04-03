@@ -1,0 +1,14 @@
+mutation createRanking($eventId: UUID!, $rankscore: Float!, $typerankId: UUID!) {
+  createRanking(
+    input: { ranking: { eventId: $eventId, rankscore: $rankscore, 
+    userId: "59c6fb76-a68a-449d-95c2-ba408132f67d", typerankId: $typerankId } }
+  ) {
+    ranking {
+      id
+      eventId
+      rankscore
+      userId 
+      typerankId
+    }
+  }
+}

@@ -1,0 +1,9 @@
+mutation deleteEnvironment($id: UUID!) {
+  deleteEnvironment(input: { id: $id }) {
+    environment {
+      id
+      environmentTh
+      environmentEn
+    }
+  }
+}

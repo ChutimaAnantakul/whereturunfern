@@ -1,0 +1,12 @@
+
+mutation createEventgroup($eventgroupnameTh:String!,$eventgroupnameEn:String!,$eventGroupImageUrl:String!) {
+  createEventgroup(input:{eventgroup:{eventgroupnameTh:$eventgroupnameTh,eventgroupnameEn:$eventgroupnameEn,eventGroupImageUrl:$eventGroupImageUrl}})
+  {
+    eventgroup{
+      id
+      eventgroupnameTh
+      eventgroupnameEn
+      eventGroupImageUrl
+    }
+  }
+}

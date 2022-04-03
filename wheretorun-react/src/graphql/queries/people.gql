@@ -1,0 +1,9 @@
+query user{
+  users{
+    nodes{
+      id
+      firstname
+      lastname
+    }
+  }
+}

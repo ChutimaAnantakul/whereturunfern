@@ -1,0 +1,11 @@
+mutation editRacetypeevent($id: UUID!, $raceId: UUID!, $eventId: UUID!) {
+  updateRacetypeevent(
+    input: { id: $id, patch: { raceId: $raceId, eventId: $eventId } }
+  ) {
+    racetypeevent {
+      id
+      raceId
+      eventId
+    }
+  }
+}

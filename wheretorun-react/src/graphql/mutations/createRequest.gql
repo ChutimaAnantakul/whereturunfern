@@ -1,0 +1,14 @@
+mutation createRequest($file: String!) {
+  createRequest(
+    input: {
+      request: {
+        file: $file
+      }
+    }
+  ) {
+    request {
+        id
+      file
+    }
+  }
+}

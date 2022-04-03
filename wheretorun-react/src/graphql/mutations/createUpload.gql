@@ -1,0 +1,26 @@
+mutation createUpload($eventId: UUID!, $fileIacard: String!, $fileEvent: String!, $iacardName: String!, $eventName: String!) {
+  createUpload(
+    input: {
+      upload: {
+        eventId: $eventId
+        fileIacard: $fileIacard
+        fileEvent: $fileEvent
+        iacardName: $iacardName
+        eventName: $eventName
+        status: false
+        userId: "584b9232-a661-4b7b-98d3-5b0ab71efc78"
+      }
+    }
+  ) {
+    upload {
+        id
+      eventId
+      fileIacard
+      fileEvent
+      iacardName
+      eventName
+      status
+      userId
+    }
+  }
+}
