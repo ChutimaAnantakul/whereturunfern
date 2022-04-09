@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { loader } from "graphql.macro";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
@@ -8,51 +8,68 @@ import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
-import Paper from "@material-ui/core/Paper";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TablePagination from "@material-ui/core/TablePagination";
-import TableRow from "@material-ui/core/TableRow";
+
 import ListItem from "@mui/material/ListItem";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
 
 // icon
 import SearchIcon from "@material-ui/icons/Search";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import DateRangeIcon from "@mui/icons-material/DateRange";
+import AddLocationIcon from "@mui/icons-material/AddLocation";
+// import DateRangeIcon from '@material-ui/icons/DateRange';
 
 // page
 import Navbar from "./layout/Navbar";
 // graphql
 const searchEventGroupQuery = loader("../graphql/queries/searchEventGroup.gql");
+const createFollowingMutations = loader("../graphql/mutations/createFollowing.gql");
 
 function SearchEventGroup() {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
-
   const useStyles = makeStyles({
     root: {
       width: "100%",
     },
     container: {
       maxHeight: "100%",
-    },
+  },
+  col: {
+    color: "#ECB365",
+    background: "#ECB365",
+  },
   });
 
   const classes = useStyles();
+
+  // insert follow
+  const [createFollowing] = useMutation(createFollowingMutations);
+  const eventgroupIdRef = useRef();
+
+  const handleSubmitFollow = async (e) => {
+
+  // const classes = useStyles();
+    // e.preventDefault();
+    // if (eventIdRef.current.value === { eventId }) {
+    //   return;
+    // } else {
+    // setstatus(!status)
+    const eventgroupId = e.target.value;
+    console.log(eventgroupId)
+    const { data } = await createFollowing({
+      variables: {
+        // id,
+        eventgroupId,
+      },
+    });
+
+    // window.location.reload();
+    // history.push(`/event/${data.createFollowing.following.eventId}`);
+    // }
+  };
+  const [show, setShow] = useState(false);
+    const toggleModal = () => setShow(!show);
 
   const inputRef = useRef();
   const [eventgroupnameTh, seteventgroupnameTh] = useState("");
@@ -68,10 +85,11 @@ function SearchEventGroup() {
   if (error) {
     return "error";
   }
+  // console.log(data.eventgroups.nodes.map((eventgroups) => eventgroups.id))
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <Box
         // height="100%"
         minHeight="37vh"
@@ -84,7 +102,7 @@ function SearchEventGroup() {
           placeItems: "center",
         }}
       >
-        <Container>
+        <Container className={classes.root}>
           <Grid container item xs={12} lg={7} justifyContent="center" mx="auto">
             <Typography
               variant="h1"
@@ -100,9 +118,6 @@ function SearchEventGroup() {
       </Box>
       <Card
         sx={{
-          p: 3,
-          // mx: { xs: 2, lg: 3 },
-          // mt: -8,
           mb: 3,
           // mr: 25,
           // ml: 25,
@@ -111,11 +126,72 @@ function SearchEventGroup() {
           overflow: "hidden",
           // borderRadius: "12px",
           boxShadow: 2,
+          bgcolor: "#676FA3",
         }}
       >
-        <div>
-          <h4>ดูรายการวิ่งย้อนหลัง</h4>
-        </div>
+        <Box>
+          <Container>
+            <Grid
+              item
+              xs={12}
+              container
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <Grid color="primary.contrastText">
+                <h4>ดูรายการวิ่งย้อนหลัง</h4>
+              </Grid>
+              <form>
+                <Grid
+                  container
+                  direction="row"
+                  justifyContent="center"
+                  alignItems="center"
+                  // spacing={1}
+                  item
+                  xs={12}
+                >
+                  <Grid item xs={7}>
+                    <ListItem>
+                      <div className="form col-md-12 ">
+                        {/* <label>ค้นหางานวิ่ง...</label> */}
+                        <input
+                          type="text"
+                          className="form-control"
+                          aria-describedby="emailHelp"
+                          ref={inputRef}
+                          placeholder="ค้นหางานวิ่ง..."
+                        // placeholder={
+                        //   eventgroupnameTh
+                        // }
+                        />
+                      </div>
+                    </ListItem>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <ListItem>
+                      <div className="form col-md-12 ">
+                        <Button
+                          variant="contained"
+                          size="large"
+                          value="search"
+                          type="submit"
+                          onClick={() =>
+                            seteventgroupnameTh(inputRef.current.value)
+                          }
+                        >
+                          <SearchIcon /> &nbsp;
+                          <div>ค้นหา</div>&nbsp;
+                        </Button>
+                      </div>
+                    </ListItem>
+                  </Grid>
+                </Grid>
+              </form>
+            </Grid>
+          </Container>
+        </Box>
       </Card>
 
       {/* <Card
@@ -133,232 +209,113 @@ function SearchEventGroup() {
           boxShadow: 4,
         }}
       > */}
-      <Container sx={{ mt: 6 }}>
-        <Grid container spacing={3} sx={{ mb: 12 }}>
-          <Grid item xs={12} lg={12}>
-            <Grid container spacing={3}>
-              <Container>
-                <Grid
-                  item
-                  xs={12}
-                  // lg={12}
-                  spacing={2}
-                  container
-                  justifyContent="space-between"
-                  alignItems="baseline"
+      {data.eventgroups.nodes.map((eventgroups) => (
+        <Container sx={{ mt: 2 }} key={eventgroups.id} >
+          <Grid
+            item
+            xs={3}
+            container
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Link
+              // to={'/searchEventGroup'}
+            to={`/eventgroup/${eventgroups.id}`}
+            >
+              <Card
+                sx={{
+                  overflow: "hidden",
+                  borderRadius: "12px",
+                  width: "100%",
+                  bgcolor: "#ECB365",
+                  color: "primary.contrastText",
+                  // md:4
+                  //   boxShadow: 2,
+                }}
+
+              >
+                <CardContent
                 >
-                  <Container>
-                    <Grid
-                      item
-                      xs={12}
-                      container
-                      direction="row"
-                      justifyContent="center"
-                      alignItems="center"
-                    >
+                  <h5>
+                    {/* {show& */}
+                   
+                    {/* } */}
+                    {eventgroups.eventgroupnameTh}🔥
+                    </h5>
+                    <input
+                      type="button"
+                      className={classes.col}
+                      value={eventgroups.id}
+                      ref={eventgroupIdRef}
+                      onClick={handleSubmitFollow}
+                    />
+                </CardContent>
+              </Card>
+            </Link>
+          </Grid>
+          <br />
+          <Grid container spacing={3} sx={{ mb: 5 }}>
+            <Grid item xs={12} lg={12}>
+              <Grid container spacing={3}>
+                {eventgroups.events.nodes.map((events) => (
+                  <Grid item xs={12} md={3} key={events.id}>
+                    {/* {show ? ( */}
+                    <Link to={`/event/${events.id}`}>
                       <Card
                         sx={{
-                          mr: 17,
-                          ml: 23,
                           overflow: "hidden",
-                          borderRadius: "12px",
-                          mb: 4,
-                          width: "100%",
-                          boxShadow: 2,
+                          borderRadius: "8px",
+                          boxShadow: 1,
+                          mb: 2,
                         }}
-                        className={classes.root}
-                        fullWidth
                       >
-                        <Paper className={classes.root}>
-                          <TableContainer className={classes.container}>
-                            <Table stickyHeader aria-label="sticky table">
-                              <TableHead>
-                                <TableRow>
-                                  <TableCell>
-                                    {/* <div>
-                                      <h4>รูปภาพ</h4>
-                                    </div> */}
-                                    <div>
-                                      <h4>งานวิ่ง</h4>
-                                    </div>
-                                    <div>
-                                      <h6>
-                                        {data.eventgroups.totalCount}
-                                        &nbsp;&nbsp;รายการ
-                                      </h6>
-                                    </div>
-                                  </TableCell>
-                                  <TableCell></TableCell>
-
-                                  <TableCell>
-                                    <Box
-                                      display="flex"
-                                      justifyContent="space-between"
-                                      p={1}
-                                    >
-                                      <Container>
-                                        <Grid
-                                          item
-                                          xs={12}
-                                          container
-                                          direction="row"
-                                          justifyContent="flex-end"
-                                          alignItems="center"
-                                        >
-                                          <form>
-                                            <Grid
-                                              container
-                                              direction="row"
-                                              justifyContent="center"
-                                              alignItems="center"
-                                              // spacing={1}
-                                              item
-                                              xs={12}
-                                            >
-                                              <Grid item xs={7}>
-                                                <ListItem>
-                                                  <div className="form col-md-12 ">
-                                                    <label>
-                                                      ค้นหางานวิ่ง...
-                                                    </label>
-                                                    <input
-                                                      type="text"
-                                                      className="form-control"
-                                                      aria-describedby="emailHelp"
-                                                      ref={inputRef}
-                                                      placeholder="ค้นหางานวิ่ง..."
-                                                      // placeholder={
-                                                      //   eventgroupnameTh
-                                                      // }
-                                                    />
-                                                  </div>
-                                                </ListItem>
-                                              </Grid>
-                                              <Grid item xs={2}>
-                                                <ListItem>
-                                                  <div className="form col-md-12 ">
-                                                    <label></label>
-                                                    <br />
-                                                    <Button
-                                                      variant="contained"
-                                                      size="large"
-                                                      value="search"
-                                                      type="submit"
-                                                      onClick={() =>
-                                                        seteventgroupnameTh(
-                                                          inputRef.current.value
-                                                        )
-                                                      }
-                                                    >
-                                                      <SearchIcon /> &nbsp;
-                                                      <div>ค้นหา</div>&nbsp;
-                                                    </Button>
-                                                  </div>
-                                                </ListItem>
-                                              </Grid>
-                                            </Grid>
-                                          </form>
-                                        </Grid>
-                                      </Container>
-                                    </Box>
-                                  </TableCell>
-                                </TableRow>
-                              </TableHead>
-                              <TableBody>
-                                {data.eventgroups.nodes
-                                  .slice(
-                                    page * rowsPerPage,
-                                    page * rowsPerPage + rowsPerPage
-                                  )
-                                  .map((eventgroups) => (
-                                    <TableRow
-                                      hover
-                                      role="checkbox"
-                                      tabIndex={-1}
-                                    >
-                                      <TableCell align="left">
-                                        {/* <div> */}
-                                        <Card
-                                          sx={{
-                                            overflow: "hidden",
-                                            borderRadius: "5px",
-                                            boxShadow: 1,
-                                            // mb: 2,
-                                          }}
-                                        >
-                                          <CardMedia
-                                            component="img"
-                                            width="100%"
-                                            height="50"
-                                            image={
-                                              eventgroups.eventGroupImageUrl
-                                            }
-                                            // alt="Live from space album cover"
-                                          />
-                                        </Card>
-                                        {/* </div> */}
-                                      </TableCell>
-                                      <TableCell align="left">
-                                        <div>
-                                          <h6>
-                                            {eventgroups.eventgroupnameTh}
-                                          </h6>
-                                        </div>
-                                      </TableCell>
-
-                                      <TableCell
-                                        align="center"
-                                        display="flex"
-                                        flexDirection="column"
-                                        alignItems="center"
-                                      >
-                                        <ButtonGroup
-                                          variant="text"
-                                          color="primary"
-                                          aria-label="text primary button group"
-                                        >
-                                          {/* {eventgroups.events.nodes.map(
-                                            (events) => (
-                                              <Link to={`/event/${events.id}`}>
-                                                <Button key={events.id}>
-                                                  <div>{events.year.year}</div>
-                                                </Button>
-                                              </Link>
-                                            )
-                                          )} */}
-                                        </ButtonGroup>
-                                      </TableCell>
-                                    </TableRow>
-                                  ))}
-                              </TableBody>
-                            </Table>
-                          </TableContainer>
-                          <TablePagination
-                            rowsPerPageOptions={[
-                              5,
-                              10,
-                              25,
-                              { label: "All", value: -1 },
-                            ]}
-                            //   rowsPerPageOptions={[10, 25, 100]}
-                            component="div"
-                            count={data.eventgroups.totalCount}
-                            rowsPerPage={rowsPerPage}
-                            page={page}
-                            onPageChange={handleChangePage}
-                            onRowsPerPageChange={handleChangeRowsPerPage}
-                          />
-                        </Paper>
+                        <CardMedia
+                          component="img"
+                          width="100%"
+                          height="150"
+                          image={events.coverphotourl}
+                          alt="Live from space album cover"
+                        />
                       </Card>
-                    </Grid>
-                  </Container>
-                </Grid>
-                {/* </Card> */}
-              </Container>
+                      {/* <Link to={`/event/${events.id}`}> */}
+                      <div className="form col-md-12 ">
+                        <h6>{events.eventnameTh}</h6>
+                      </div>{" "}
+                      <Grid
+                        sx={{
+                          mt: 2,
+                        }}
+                      />
+                      <div className="form col-md-12 ">
+                        <AccountCircleIcon />
+                        &nbsp;{events.organizer}
+                      </div>
+                      <div className="form col-md-12 ">
+                        <DateRangeIcon />
+                        &nbsp;รับสมัคร:&nbsp;{events.openforapplications}
+                        &nbsp;-&nbsp;
+                        {events.applicationdeadline}
+                      </div>
+                      <div className="form col-md-12 ">
+                        <DateRangeIcon />
+                        &nbsp;จัดงานวิ่ง:&nbsp;{events.startdate}&nbsp;-&nbsp;
+                        {events.enddate}
+                      </div>
+                      <div className="form col-md-12 ">
+                        <AddLocationIcon />
+                        &nbsp;{events.locationTh}
+                        {events.province.provinceTh}
+                      </div>
+                    </Link>
+                    {/* // ) : null} */}
+                  </Grid>
+                ))}
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
-      </Container>
+        </Container>
+      ))}
       {/* </Card> */}
 
       {/* <Box pt={6} px={1} mt={6}>

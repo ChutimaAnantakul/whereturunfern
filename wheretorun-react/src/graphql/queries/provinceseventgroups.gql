@@ -11,7 +11,19 @@ query provinceseventgroupss {
       id
       eventgroupnameTh
       eventgroupnameEn
-      follow
+    }
+  }
+  followings{
+    nodes{
+      id
+      status
+      followName
+      eventgroup{
+        id
+        eventgroupnameTh
+        eventgroupnameEn
+        eventgroupimageurl
+      }
     }
   }
   admins{
@@ -24,3 +36,5 @@ query provinceseventgroupss {
     }
   } 
 }
+
+

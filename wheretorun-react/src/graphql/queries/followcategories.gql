@@ -1,0 +1,18 @@
+query followcategories {
+  followcategories(orderBy:ID_ASC){
+    totalCount
+    nodes {
+      id
+      status
+      userId
+      categoryId
+    }
+  }
+  categories{
+    nodes{
+      id
+      categorynameTh
+      categorynameEn
+    }
+  }
+}

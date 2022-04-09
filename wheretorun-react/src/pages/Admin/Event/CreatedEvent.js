@@ -150,7 +150,7 @@ const CreatedEvent = ({ history }) => {
       const provinceId = provinceIdRef.current.value;
       const adminId = adminIdRef.current.value;
       const eventgroupId = eventgroupIdRef.current.value;
-
+console.log(eventgroupId)
       const { data } = await createEvent({
         variables: {
           eventnameTh,
@@ -179,7 +179,7 @@ const CreatedEvent = ({ history }) => {
         },
       });
 
-      history.push(`/createdRaceEvent`);
+      history.push(`/createdEvent`);
       // window.location.reload();
     }
   };
@@ -187,10 +187,10 @@ const CreatedEvent = ({ history }) => {
   function sendEmail(e) {
     e.preventDefault();
        const check = eventgroupIdRef.current.value;
-       const ch = data.eventgroups.nodes.map((eventgroups) => eventgroups.id);
+       const ch = data.followings.nodes.map((followings) => followings.eventgroup.id);
        for (let index = 0; index < ch.length; index++) {
           if (ch[index] == check) {
-            const i = data.eventgroups.nodes.map((eventgroups) => eventgroups.follow);
+            const i = data.followings.nodes.map((followings) => followings.status);
               if(i[index].toString()=="true"){
                 emailjs.sendForm('service_nrzagaf', 'template_ns9i3ca', e.target, 'usrgMdpsr9kWZLe0i')
                 .then((result) => {
@@ -205,7 +205,7 @@ const CreatedEvent = ({ history }) => {
             // console.log(ch[index]+" : "+check)
             
           } else {
-           const i = data.eventgroups.nodes.map((eventgroups) => eventgroups.follow);
+           const i = data.followings.nodes.map((followings) => followings.status);
            // console.log("dfsfsdf"+i[index])
           }
        }
@@ -220,7 +220,7 @@ const CreatedEvent = ({ history }) => {
     return "error";
   }
 
-  // console.log(data.eventgroups.nodes.map((eventgroups) => eventgroups.follow))
+  // console.log(data.followings.nodes.map((followings) => followings.status))
 
   return (
     <Box sx={{ display: "flex" }}>

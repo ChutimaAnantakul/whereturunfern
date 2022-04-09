@@ -78,26 +78,21 @@ function NewEventdetail({ match, history }) {
   const [eventId, seteventId] = useState();
   // const [userId, setId] = useState();
 
-  const [updateFollow] = useMutation(updateFollowMutations);
   const eventgroupIdRef = useRef();
   const [checked, setChecked] = React.useState(false);
-  // const [follow, setfollow] = React.useState({
-  //   followA: "ติดตาม",
-  //   followB: "กำลังติดตาม",
-  // });
+  const [followName, setfollowName] = React.useState({
+    followNameA: "ติดตาม",
+    followNameB: "กำลังติดตาม",
+  });
 
-  const [createFollowing] = useMutation(createFollowingMutations);
   // const userIdRef = useRef();
   // const [followname, setfollowName] = React.useState({
   //   followA: true,
   //   followB: false,
   // });
 
-  // const [follow, setfollow] = React.useState("");
-  const [follow, setfollow] = React.useState(false);
 
-
-
+// review
   const [createdReview] = useMutation(createdReviewMutations);
   const eventIdRef = useRef();
   const reviewRef = useRef();
@@ -123,12 +118,16 @@ function NewEventdetail({ match, history }) {
     }
   };
 
+
+// insert follow
+const [createFollowing] = useMutation(createFollowingMutations);
+
   const handleSubmitFollow = async (e) => {
     // e.preventDefault();
     // if (eventIdRef.current.value === { eventId }) {
     //   return;
     // } else {
-    setfollow(!follow)
+    // setstatus(!status)
     const eventgroupId = eventgroupIdRef.current.value;
     console.log(eventgroupId)
     const { data } = await createFollowing({
@@ -143,20 +142,25 @@ function NewEventdetail({ match, history }) {
     // }
   };
 
+
+  // update follow
+  const [updateFollow] = useMutation(updateFollowMutations);
+  const [status, setstatus] = React.useState(false);
+
   const handleChange = async (event) => {
 
     const id = event.target.value;
     // const id = eventgroupIdRef.current.value;
     // const followname = event.target.checked
-    setfollow(event.target.checked);
-    setfollow(!follow)
+    setstatus(event.target.checked);
+    setstatus(!status)
     // setfollowName(event.target.checked);
-    console.log(follow, id);
+    console.log(status, id);
     const { data } = await updateFollow({
       variables: {
         // id,
         id,
-        follow,
+        status,
       },
     });
 
@@ -183,33 +187,9 @@ function NewEventdetail({ match, history }) {
   if (error) {
     return "error";
   }
-  const fo = data.follownames.nodes.map((follownames) => follownames.followName)
-  const un = fo[1]
-  console.log(un)
-  // const dis = data.follownames.nodes.map((follownames) => follownames.status); 
-  // const disa = dis[1];
-  // if(follow===disa){
-  //   return data.follownames.nodes.map((follownames) => follownames.followName)
-  // }
-
-  // let sta = data.follownames.nodes.map((follownames) => follownames.status);
-  // let fol = null;
-  // switch (fol) {
-  //   case fol === true:
-  //     component = <Country data={data} />;
-  //     break;
-  //   case dataLength > 1:
-  //     component = <ListCountries data={data} />;
-  //     break;
-  //   case dataLength > 10:
-  //     component = <div>Too many matches, specify another filter</div>;
-  //     break;
-  //   default:
-  //     component = <p>Else statement</p>;
-  //     break;
-  // }
-
-  // return <>{component}</>;
+  // const fo = data.follownames.nodes.map((follownames) => follownames.followName)
+  // const un = fo[1]
+  // console.log(un)
 
   //   const classes = UseStyles();
 
@@ -871,9 +851,9 @@ function NewEventdetail({ match, history }) {
                             </Button>
                           )} */}
 
-                          {follow ? (
+                          {status ? (
                             <button
-                              checked={follow.followB}
+                              checked={status}
                               value={data.event.eventgroup.followings.nodes.map((followings) => followings.id)}
                               onClick={handleChange}
                             >Unfollow</button>) : (<button
@@ -882,31 +862,7 @@ function NewEventdetail({ match, history }) {
                               ref={eventgroupIdRef}
                               onClick={handleSubmitFollow}
                             >Follow</button>)}
-
-
-
-                          {/* {follow ? (
-                            <label>
-                            <input type="checkbox"
-                              checked={follow.followB}
-                              value={data.event.eventgroup.followings.nodes.map((followings) => followings.id)}
-                              onClick={handleChange}
-                            />
-                            กำลังติดตาม
-                          </label>
-                          ) : (
-                            <label>
-                              <input type="checkbox"
-                                checked={follow.followB}
-                                value={data.event.eventgroup.id}
-                                ref={eventgroupIdRef}
-                                onClick={handleSubmitFollow}
-
-                              />
-                              ติดตาม
-                            </label>
-                            
-                          )} */}
+                          
 
                           {/*                           
                           <div className="flex justify-center items-center w-8 h-8 rounded-full m-2 fixed bottom-4 right-4">

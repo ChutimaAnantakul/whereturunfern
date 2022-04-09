@@ -46,16 +46,19 @@ import CommentIcon from "@material-ui/icons/Comment";
 import Navbar from "../pages/layout/Navbar";
 
 //lodergrapghl
-const categoriesQueries = loader("../graphql/queries/categories.gql");
-const FollowCategoryMutations = loader("../graphql/mutations/FollowCategory.gql");
+const followcategoriesQueries = loader("../graphql/queries/followcategories.gql");
+const createFollowCategoryMutations = loader("../graphql/mutations/createFollowCategory.gql");
 
 const FollowCategory = ({ history, match }) => {
-    const [FollowCategory] = useMutation(FollowCategoryMutations);
+    const [createFollowCategory] = useMutation(createFollowCategoryMutations);
     const IdRef = useRef();
+    const categoryIdRef = useRef();
+    const [categoryId, setcategoryId] = useState();
+    // const [status, setstatus] = React.useState(false);
 
-    const [followcategory, setffollowcategory] = React.useState({
-        followcategoryA: true,
-        followcategoryB: false,
+    const [status, setstatus] = React.useState({
+        statusA: true,
+        statusB: false,
     });
 
     const useStyles = makeStyles({
@@ -69,32 +72,57 @@ const FollowCategory = ({ history, match }) => {
 
     const classes = useStyles();
 
+    const handleChangeStatus = async (event) => {
+
+        // const id = IdRef.current.value;
+        // const categoryId = event.target.value;
+        // setstatus(event.target.checked);
+        // setstatus(!status)
+        const categoryId = event.target.value;
+        setcategoryId(categoryId);
+        const status = event.target.checked
+        setstatus(status);
+        // setfollow(event.target.checked)
+        // setfollowName(event.target.checked);
+        console.log(status, categoryId);
+        // const { data } = await createFollowCategory({
+        //     variables: {
+        //         //   id,
+        //         categoryId,
+        //         status,
+        //     },
+        // });
+    };
+
+
+    // insert follow category
     const handleChangeFollowCategory = async (event) => {
 
         // const id = IdRef.current.value;
-        const id = event.target.value;
-        const followcategory = event.target.checked
-        setffollowcategory(followcategory);
-        // setfollow(event.target.checked)
-        // setfollowName(event.target.checked);
-        console.log(followcategory, id);
-        const { data } = await FollowCategory({
+        // const categoryId = event.target.value;
+        // const categoryId = event.target.value;
+
+        // console.log(categoryId, status);
+        const { data } = await createFollowCategory({
             variables: {
-              id,
-              followcategory,
+                //   id,
+                categoryId,
+                status,
             },
-          });
+        });
+        history.push(`/followcate`);
+      window.location.reload();
     };
 
     //   const { id } = match.params;
-    const { loading, error, data } = useQuery(categoriesQueries)
+    const { loading, error, data } = useQuery(followcategoriesQueries)
     if (loading) {
         return "loading...";
     }
     if (error) {
         return "error";
     }
-    // console.log(data);
+    // console.log(data.categories.nodes.map((categories) => categories.id));
 
     return (
         <Box xs={12} sx={{ display: "flex" }}>
@@ -202,9 +230,11 @@ const FollowCategory = ({ history, match }) => {
                                                                                         // className="form-control"
                                                                                         aria-describedby="emailHelp"
                                                                                         required
-                                                                                        checked={followcategory.followcategoryB}
+                                                                                        checked={status.statusB}
+                                                                                        // value={categories.id}
                                                                                         value={categories.id}
-                                                                                        onChange={handleChangeFollowCategory}
+                                                                                        ref={categoryIdRef}
+                                                                                        onChange={handleChangeStatus}
 
                                                                                     />&nbsp;
                                                                                     {/* <Checkbox
@@ -263,9 +293,20 @@ const FollowCategory = ({ history, match }) => {
                                                     // onClick={handleSubmit}
                                                     // onClick={handleChangeFollowCategory}
                                                     >
-                                                        follow
+                                                        Not Follow
                                                     </Button>
-                                                </Link>
+                                                </Link>&nbsp;&nbsp;
+                                                {/* <Link to="/"> */}
+                                                <Button
+                                                    variant="contained"
+                                                    type="submit"
+                                                    // onClick={handleSubmit}
+                                                    onClick={handleChangeFollowCategory}
+                                                >
+                                                    Follow
+                                                </Button>
+                                                {/* </Link> */}
+
                                             </Grid>
                                             <Divider variant="inset" component="li" />
                                         </div>

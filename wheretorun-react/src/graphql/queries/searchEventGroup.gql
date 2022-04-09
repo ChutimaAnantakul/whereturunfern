@@ -37,9 +37,12 @@ query searcheventgroup($eventgroupnameTh: String!) {
             provinceTh
             provinceEn
           }
+         
           eventgroupId
         }
       }
     }
   }
 }
+
+  

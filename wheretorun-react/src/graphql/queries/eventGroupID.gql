@@ -1,8 +1,49 @@
-query eventgroupid($id: UUID!) {
+query eventgroupID($id: UUID!) {
   eventgroup(id: $id) {
     id
     eventgroupnameTh
     eventgroupnameEn
-    eventGroupImageUrl
+    eventgroupimageurl
+    events {
+      totalCount
+      nodes {
+        id
+        eventnameTh
+        eventnameEn
+        locationTh
+        locationEn
+        linkurl
+        coverphotourl
+        startdate
+        enddate
+        openforapplications
+        applicationdeadline
+        descriptionTh
+        descriptionEn
+        hashtag
+        organizer
+        latitude
+        longitude
+        poster
+        status
+        awardphoto
+        shirtsize
+        facebookurl
+        provinceId
+        province {
+          provinceTh
+          provinceEn
+        }
+      }
+    }
+    followings{
+      nodes{
+        id
+        status
+        followName
+        userId
+        eventgroupId
+      }
+    }
   }
 }

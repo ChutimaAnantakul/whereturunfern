@@ -1,6 +1,7 @@
 mutation updateFollow(
   $id: UUID!
   $status: Boolean!
+  $followName: String!
 ) 
 
 {
@@ -9,12 +10,14 @@ mutation updateFollow(
       id: $id
       patch: {
         status: $status
+        followName: $followName
       }
     }
   ) {
     following {
       id
       status
+      followName
     }
   }
 }
