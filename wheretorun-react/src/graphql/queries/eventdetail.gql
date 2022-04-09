@@ -35,6 +35,8 @@ query event($id:UUID!){
           id
           userId
           eventgroupId
+          status
+          followName
         }
       }
     }
@@ -89,13 +91,6 @@ query event($id:UUID!){
       firstname
       lastname
       profileimageurl
-    }
-  }
-  follownames{
-    nodes{
-      id
-      followName
-      status
     }
   }
 }

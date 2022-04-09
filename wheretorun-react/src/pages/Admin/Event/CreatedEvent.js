@@ -317,6 +317,7 @@ const CreatedEvent = ({ history }) => {
                               <select
                                 className="form-select"
                                 aria-label="Default select example"
+                                name="eventgroupId"
                                 ref={eventgroupIdRef}
                                 required
                               >

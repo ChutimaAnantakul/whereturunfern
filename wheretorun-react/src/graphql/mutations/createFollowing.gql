@@ -4,7 +4,8 @@ mutation createFollowing($eventgroupId: UUID!) {
       following: {
         eventgroupId: $eventgroupId
         userId: "584b9232-a661-4b7b-98d3-5b0ab71efc78"
-        follow: true
+        status: false
+        followName: "ติดตาม"
       }
     }
   ) {
@@ -12,7 +13,8 @@ mutation createFollowing($eventgroupId: UUID!) {
         id
       eventgroupId
       userId
-      follow
+      status
+      followName
     }
   }
 }
