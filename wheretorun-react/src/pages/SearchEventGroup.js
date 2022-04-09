@@ -317,7 +317,7 @@ function SearchEventGroup() {
                                           color="primary"
                                           aria-label="text primary button group"
                                         >
-                                          {eventgroups.events.nodes.map(
+                                          {/* {eventgroups.events.nodes.map(
                                             (events) => (
                                               <Link to={`/event/${events.id}`}>
                                                 <Button key={events.id}>
@@ -325,7 +325,7 @@ function SearchEventGroup() {
                                                 </Button>
                                               </Link>
                                             )
-                                          )}
+                                          )} */}
                                         </ButtonGroup>
                                       </TableCell>
                                     </TableRow>

@@ -10,11 +10,9 @@ query user($id:UUID!){
     idcard
     birthdate
     profileimageurl  
-    uploads{
+    requestapprovals{
       nodes{
         id
-        iacardName
-        eventName
         event{
           eventnameTh
           eventnameEn
@@ -26,9 +24,7 @@ query user($id:UUID!){
             nodes{
               id
               race{
-                raceTh
-                raceEn
-                price
+                id
                 distance
               }
             }

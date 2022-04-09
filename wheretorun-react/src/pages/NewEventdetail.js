@@ -31,6 +31,7 @@ import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
 import Switch from '@material-ui/core/Switch';
 
+
 // icon
 import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
 import DateRangeIcon from "@mui/icons-material/DateRange";
@@ -49,11 +50,13 @@ import Forward from "@mui/icons-material/Forward";
 
 //page
 import Navbar from "../pages/layout/Navbar";
+import NavbarEn from "../pages/layout/NavbarEn";
 
 // graql
 const eventdetailQuery = loader("../graphql/queries/eventdetail.gql");
 const createdReviewMutations = loader("../graphql/mutations/createdReview.gql");
 const updateFollowMutations = loader("../graphql/mutations/updateFollow.gql");
+const createFollowingMutations = loader("../graphql/mutations/createFollowing.gql");
 
 
 const useStyles = makeStyles((theme) => ({
@@ -73,74 +76,31 @@ function NewEventdetail({ match, history }) {
   // const toggleModal = () => setShow(!show);
 
   const [eventId, seteventId] = useState();
+  // const [userId, setId] = useState();
 
   const [updateFollow] = useMutation(updateFollowMutations);
   const eventgroupIdRef = useRef();
+  const [checked, setChecked] = React.useState(false);
+  // const [follow, setfollow] = React.useState({
+  //   followA: "ติดตาม",
+  //   followB: "กำลังติดตาม",
+  // });
+
+  const [createFollowing] = useMutation(createFollowingMutations);
+  // const userIdRef = useRef();
   // const [followname, setfollowName] = React.useState({
-  //   follow: "ติดตาม",
-  //   unfollow: "กำลังติดตาม",
+  //   followA: true,
+  //   followB: false,
   // });
 
-  const [followname, setfollowName] = React.useState({
-    followA: true,
-    followB: false,
-  });
+  // const [follow, setfollow] = React.useState("");
+  const [follow, setfollow] = React.useState(false);
 
-  // const [checked, setChecked] = React.useState({
-  //   checkedA: true,
-  //   checkedB: false,
-  // });
 
-  const handleChange = async (event) => {
-    // event.preventDefault();
-    // if (eventgroupIdRef.current.value === { id }) {
-    //   return;
-    // } else {
-      const id = eventgroupIdRef.current.value;
-    setfollowName(event.target.checked);
-    console.log(followname, id);
-    const { data } = await updateFollow({
-      variables: {
-        id,
-        followname,
-      },
-    });
-    history.push(`/event/${data.event.id}`);
-    window.location.reload();
-  // }
-  };
-
-  const handleChangeSwitch = async (e) => {
-    // const followname =setfollowName(e.target.checked);
-    // console.log(followname);
-    // const { data } = await updateFollow({
-    //     variables: {
-    //         id,
-    //         followname,
-    //     },
-    // });
-    // history.push(`/passapproval`);
-    // window.location.reload();
-  }
 
   const [createdReview] = useMutation(createdReviewMutations);
   const eventIdRef = useRef();
   const reviewRef = useRef();
-
-  // const handleChange = async (e) => {
-  //   const followName = FollowRef.current.value;
-  //   const followname = e.target.checked;
-  //   if (followname === false) {
-  //     return followname = setfollowName("กำลังติดตาม");
-  //   } else if (followName === true) {
-  //     return followname = setfollowName("ติดตาม");
-  //   } else {
-  //     e.preventDefault();
-
-  //   const followname = e.target.checked;
-  //   console.log(followname);
-  //   }
-  // }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -163,6 +123,52 @@ function NewEventdetail({ match, history }) {
     }
   };
 
+  const handleSubmitFollow = async (e) => {
+    // e.preventDefault();
+    // if (eventIdRef.current.value === { eventId }) {
+    //   return;
+    // } else {
+    setfollow(!follow)
+    const eventgroupId = eventgroupIdRef.current.value;
+    console.log(eventgroupId)
+    const { data } = await createFollowing({
+      variables: {
+        // id,
+        eventgroupId,
+      },
+    });
+
+    // window.location.reload();
+    // history.push(`/event/${data.createFollowing.following.eventId}`);
+    // }
+  };
+
+  const handleChange = async (event) => {
+
+    const id = event.target.value;
+    // const id = eventgroupIdRef.current.value;
+    // const followname = event.target.checked
+    setfollow(event.target.checked);
+    setfollow(!follow)
+    // setfollowName(event.target.checked);
+    console.log(follow, id);
+    const { data } = await updateFollow({
+      variables: {
+        // id,
+        id,
+        follow,
+      },
+    });
+
+    // window.location.reload();
+    // history.push(`/event/${data.event.id}`);
+  };
+
+  const handleChangeToggle = async (event) => {
+    setChecked(event.target.checked);
+    console.log(checked)
+  };
+
 
   const { id } = match.params;
   const { loading, error, data } = useQuery(eventdetailQuery, {
@@ -177,7 +183,33 @@ function NewEventdetail({ match, history }) {
   if (error) {
     return "error";
   }
+  const fo = data.follownames.nodes.map((follownames) => follownames.followName)
+  const un = fo[1]
+  console.log(un)
+  // const dis = data.follownames.nodes.map((follownames) => follownames.status); 
+  // const disa = dis[1];
+  // if(follow===disa){
+  //   return data.follownames.nodes.map((follownames) => follownames.followName)
+  // }
 
+  // let sta = data.follownames.nodes.map((follownames) => follownames.status);
+  // let fol = null;
+  // switch (fol) {
+  //   case fol === true:
+  //     component = <Country data={data} />;
+  //     break;
+  //   case dataLength > 1:
+  //     component = <ListCountries data={data} />;
+  //     break;
+  //   case dataLength > 10:
+  //     component = <div>Too many matches, specify another filter</div>;
+  //     break;
+  //   default:
+  //     component = <p>Else statement</p>;
+  //     break;
+  // }
+
+  // return <>{component}</>;
 
   //   const classes = UseStyles();
 
@@ -190,8 +222,8 @@ function NewEventdetail({ match, history }) {
   };
 
   return (
-    <>
-      <Navbar />
+    <div>
+      {checked ? <Navbar /> : <NavbarEn />}
       <Toolbar />
       <Box
         minHeight="75vh"
@@ -274,9 +306,9 @@ function NewEventdetail({ match, history }) {
                   fullWidth
                 >
                   <CardContent>
-                    <h2>{data.event.eventnameTh}</h2> <hr />
+                    <h2>{checked ? data.event.eventnameTh : data.event.eventnameEn}</h2> <hr />
                     <h4>
-                      <AccountCircleIcon /> ผู้จัดงาน | {data.event.organizer}
+                      <AccountCircleIcon />{checked ? "ผู้จัดงาน" : "Organizer"} | {data.event.organizer}
                     </h4>
                     <h5>
                       <AddLocationIcon /> {data.event.locationTh}{" "}
@@ -706,7 +738,7 @@ function NewEventdetail({ match, history }) {
                         <ListItem>
                           <Avatar
                             // alt="Remy Sharp"
-                            src="https://www.akerufeed.com/wp-content/uploads/2017/12/290db60ae65772649e2939a4c74d578c.jpg"
+                            src={data.users.nodes.map((users) => users.profileimageurl)}
                           />
                           &nbsp;&nbsp;
                           <div>
@@ -775,19 +807,19 @@ function NewEventdetail({ match, history }) {
                         <h5>กลุ่มงานวิ่ง</h5>
                       </ListItem>
                       <select
-                            type="text"
-                            className="form-control"
-                            aria-describedby="emailHelp"
-                            defaultValue={data.event.eventgroup.eventgroupnameTh}
-                            value={data.event.eventgroup.id}
-                            ref={eventgroupIdRef}
-                          // disabled
-                          >
-                            <option key={data.event.eventgroup.id} value={data.event.eventgroup.id}>
-                              : {data.event.eventgroup.eventgroupnameTh}
-                            </option>
-                          </select>
-                      <hr />
+                        type="text"
+                        className="form-control"
+                        aria-describedby="emailHelp"
+                        defaultValue={data.event.eventgroup.eventgroupnameTh}
+                        value={data.event.eventgroup.id}
+                        ref={eventgroupIdRef}
+                      // disabled
+                      >
+                        <option key={data.event.eventgroup.id} value={data.event.eventgroup.id}>
+                          : {data.event.eventgroup.eventgroupnameTh}
+                        </option>
+                      </select>
+                      {/* <hr /> */}
                       <Grid
                         container
                         item
@@ -801,72 +833,96 @@ function NewEventdetail({ match, history }) {
                           value={data.event.eventgroup.id}
                           ref={eventgroupIdRef}
                           >{data.event.eventgroup.eventgroupnameTh}</b></h6> */}
-                          <h6>Follow</h6>&nbsp; 
-                          <Forward />
-                          &nbsp; 
-                          {/* <Button
-                              variant="contained"
-                              color="warning"
-                              checked={followname.follow}
-                              onClick={()=>handleChange}
-                            >
-                              &nbsp; {data.event.followname}
-                            </Button> */}
-                          <Switch
-                            checked={followname.followB}
-                            onChange={handleChange}
-                            inputProps={{ 'aria-label': 'controlled' }}
-                          />
+                          {/* <h6>Follow</h6>&nbsp; */}
+                          {/* <Forward /> */}
+                          &nbsp;
 
+
+                          {/* <input type="checkbox"
+                            checked={follow.followB}
+                            value={data.event.eventgroup.followings.nodes.map((followings) => followings.id)}
+                            onChange={handleChange}
+                            onClick={handleSubmitFollow}
+                          />
+                          &nbsp;
+                          {follow ? "กำลังติดตาม" : "ติดตาม"} */}
+
+                          {/* {follow ? (
+                            <Button
+                              color="inherit"
+                              ariant="contained"
+                              size="large"
+                              checked={follow.followB}
+                              value={data.event.eventgroup.followings.nodes.map((followings) => followings.id)}
+                              onChange={handleChange}
+                            >
+                              &nbsp;<div>กำลังติดตาม</div>
+                            </Button>
+                          ) : (
+                            <Button
+                              color="inherit"
+                              ariant="contained"
+                              size="large"
+                              value={data.event.eventgroup.id}
+                              ref={eventgroupIdRef}
+                              onClick={handleSubmitFollow}
+                            >
+                              &nbsp;<div>ติดตาม</div>
+                            </Button>
+                          )} */}
+
+                          {follow ? (
+                            <button
+                              checked={follow.followB}
+                              value={data.event.eventgroup.followings.nodes.map((followings) => followings.id)}
+                              onClick={handleChange}
+                            >Unfollow</button>) : (<button
+
+                              value={data.event.eventgroup.id}
+                              ref={eventgroupIdRef}
+                              onClick={handleSubmitFollow}
+                            >Follow</button>)}
+
+
+
+                          {/* {follow ? (
+                            <label>
+                            <input type="checkbox"
+                              checked={follow.followB}
+                              value={data.event.eventgroup.followings.nodes.map((followings) => followings.id)}
+                              onClick={handleChange}
+                            />
+                            กำลังติดตาม
+                          </label>
+                          ) : (
+                            <label>
+                              <input type="checkbox"
+                                checked={follow.followB}
+                                value={data.event.eventgroup.id}
+                                ref={eventgroupIdRef}
+                                onClick={handleSubmitFollow}
+
+                              />
+                              ติดตาม
+                            </label>
+                            
+                          )} */}
+
+                          {/*                           
+                          <div className="flex justify-center items-center w-8 h-8 rounded-full m-2 fixed bottom-4 right-4">
+                            <Switch
+                              checked={followname}
+                              onChange={handleChange}
+                              inputProps={{ "aria-label": "controlled" }}
+                            />
+                          </div> */}
 
                         </ListItem>
-                        
-                          {/* <Switch
-                            checked={followname.followB}
-                            onChange={handleChange}
-                            inputProps={{ 'aria-label': 'controlled' }}
-                          /> */}
                       </Grid>
                     </CardContent>
                   </Card>
 
-                  {/* <Card
-                    justifyContent="center"
-                    alignItems="flex-start"
-                    sx={{
-                      overflow: "hidden",
-                      borderRadius: "12px",
-                      boxShadow: 1,
-                      mb: 4,
-                      width: "30%",
-                      bgcolor: "#F9CF93",
-                    }}
-                  >
-                    <CardActions>
-                      <Grid
-                        container
-                        item
-                        justifyContent="center"
-                        xs={12}
-                        m={2}
-                        sx={{
-                          overflow: "hidden",
-                        }}
 
-                      >
-                        <button
-                        checked={followname.checkedB}
-                         onClick={() => handleChange}
-                        >{data.event.followname}</button>
-                      </Grid>
-                    </CardActions>
-                  </Card> */}
-
-                  {/* <Switch
-                    checked={checked.checkedA}
-                    onChange={handleChange}
-                    inputProps={{ 'aria-label': 'controlled' }}
-                  /> */}
                 </Container>
               </Grid>
             </Grid>
@@ -884,7 +940,14 @@ function NewEventdetail({ match, history }) {
       {/* <Box pt={6} px={1} mt={6}>
         <DefaultFooter content={footerRoutes} />
       </Box> */}
-    </>
+      <div className="flex justify-center items-center w-8 h-8 rounded-full m-2 fixed bottom-4 right-4">
+        EN<Switch
+          checked={checked}
+          onChange={handleChangeToggle}
+          inputProps={{ "aria-label": "controlled" }}
+        />TH
+      </div>
+    </div>
   );
 }
 

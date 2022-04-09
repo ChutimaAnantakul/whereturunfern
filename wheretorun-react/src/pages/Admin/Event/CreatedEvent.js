@@ -1,11 +1,8 @@
 import React, { useState, useRef, Fragment } from "react";
-import emailjs from "emailjs-com";
 import { useMutation, useQuery } from "@apollo/client";
+import emailjs from "emailjs-com";
 import { loader } from "graphql.macro";
 import { Link } from "react-router-dom";
-import { useForm, Controller } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as Yup from "yup";
 
 import Box from "@mui/material/Box";
 // import Button from "@mui/material/Button";
@@ -45,8 +42,8 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import Save from "@mui/icons-material/Save";
 
 //graphql
-const yearprovinceseventgroupsQueries = loader(
-  "../../../graphql/queries/yearprovinceseventgroups.gql"
+const provinceseventgroupsQueries = loader(
+  "../../../graphql/queries/provinceseventgroups.gql"
 );
 
 const createEventMutations = loader(
@@ -80,26 +77,12 @@ const CreatedEvent = ({ history }) => {
   const posterRef = useRef();
   const facebookurlRef = useRef();
   const hashtagRef = useRef();
-  const yearIdRef = useRef();
+  const adminIdRef = useRef();
   const awardphotoRef = useRef();
   const provinceIdRef = useRef();
   const shirtsizeRef = useRef();
   const eventgroupIdRef = useRef();
 
-
-  function sendEmail(e) {
-    e.preventDefault();
-
-    emailjs.sendForm('service_nrzagaf', 'template_ns9i3ca', e.target, 'usrgMdpsr9kWZLe0i')
-      .then((result) => {
-        console.log(result.text);
-      }, (error) => {
-        console.log(error.text);
-      });
-    e.target.reset()
-  }
-
- 
   // const {
   //   createevent,
   //   control,
@@ -124,7 +107,7 @@ const CreatedEvent = ({ history }) => {
       applicationdeadlineRef.current.value === "" ||
       startdateRef.current.value === "" ||
       enddateRef.current.value === "" ||
-      yearIdRef.current.value === "" ||
+      adminIdRef.current.value === "" ||
       hashtagRef.current.value === "" ||
       linkurlRef.current.value === "" ||
       // facebookurlRef.current.value === "" ||
@@ -165,7 +148,7 @@ const CreatedEvent = ({ history }) => {
       const facebookurl = facebookurlRef.current.value;
       const organizer = organizerRef.current.value;
       const provinceId = provinceIdRef.current.value;
-      const yearId = yearIdRef.current.value;
+      const adminId = adminIdRef.current.value;
       const eventgroupId = eventgroupIdRef.current.value;
 
       const { data } = await createEvent({
@@ -191,24 +174,53 @@ const CreatedEvent = ({ history }) => {
           awardphoto,
           shirtsize,
           provinceId,
-          yearId,
+          adminId,
           eventgroupId,
         },
       });
 
       history.push(`/createdRaceEvent`);
-      window.location.reload();
+      // window.location.reload();
     }
   };
 
-  const { error, loading, data } = useQuery(yearprovinceseventgroupsQueries);
+  function sendEmail(e) {
+    e.preventDefault();
+       const check = eventgroupIdRef.current.value;
+       const ch = data.eventgroups.nodes.map((eventgroups) => eventgroups.id);
+       for (let index = 0; index < ch.length; index++) {
+          if (ch[index] == check) {
+            const i = data.eventgroups.nodes.map((eventgroups) => eventgroups.follow);
+              if(i[index].toString()=="true"){
+                emailjs.sendForm('service_nrzagaf', 'template_ns9i3ca', e.target, 'usrgMdpsr9kWZLe0i')
+                .then((result) => {
+                  console.log("OK");
+                },
+                (error) => {
+                  console.log(error.text);
+                });
+              e.target.reset()
+              }
+            console.log(i[index])
+            // console.log(ch[index]+" : "+check)
+            
+          } else {
+           const i = data.eventgroups.nodes.map((eventgroups) => eventgroups.follow);
+           // console.log("dfsfsdf"+i[index])
+          }
+       }
+  }
 
+
+  const { error, loading, data } = useQuery(provinceseventgroupsQueries);
   if (loading) {
     return "loading...";
   }
   if (error) {
     return "error";
   }
+
+  // console.log(data.eventgroups.nodes.map((eventgroups) => eventgroups.follow))
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -538,9 +550,9 @@ const CreatedEvent = ({ history }) => {
                                   }}
                                   rangeSelector="start"
                                   value={startDate}
-                                  name="openforapplications"
                                   ref={openforapplicationsRef}
                                 />
+
                                 <DatePicker
                                   rangeStartDate={startDate}
                                   rangeEndDate={endDate}
@@ -552,7 +564,6 @@ const CreatedEvent = ({ history }) => {
                                   }
                                   rangeSelector="end"
                                   value={endDate}
-                                  name="applicationdeadline"
                                   ref={applicationdeadlineRef}
                                 />
                               </div>
@@ -581,7 +592,6 @@ const CreatedEvent = ({ history }) => {
                                   }}
                                   rangeSelector="start"
                                   value={startDate2}
-                                  name="startdate"
                                   ref={startdateRef}
                                 />
                                 <DatePicker
@@ -595,7 +605,6 @@ const CreatedEvent = ({ history }) => {
                                   }
                                   rangeSelector="end"
                                   value={endDate2}
-                                  name="enddate"
                                   ref={enddateRef}
                                 />
                               </div>
@@ -603,30 +612,32 @@ const CreatedEvent = ({ history }) => {
                           </ListItem>
                         </Grid>
                         <Grid item xs={12} md={6}>
-                          <Box>
-                            <ListItem>
-                              <ListItemAvatar>
-                                <Avatar>
-                                  <DateRangeIcon />
-                                </Avatar>
-                              </ListItemAvatar>
-                              <div className="form col-md-11 ">
-                                <label>ปีที่จัดงาน</label>
-                                <select
-                                  className="form-select"
-                                  aria-label="Default select example"
-                                  ref={yearIdRef}
-                                  required
+                          <ListItem>
+                            <ListItemAvatar>
+                              <Avatar>
+                                <DateRangeIcon />
+                              </Avatar>
+                            </ListItemAvatar>
+                            <div className="form col-md-11 ">
+                              <label>ชื่อผู้บันทึก</label>
+                              <select
+                                className="form-select"
+                                aria-label="Default select example"
+                                value={data.admins.nodes.map((admins) => admins.id)}
+                                ref={adminIdRef}
+                                required
+                                disabled
+                              >
+                                <option
+                                  key={data.admins.nodes.map((admins) => admins.id)}
+                                  value={data.admins.nodes.map((admins) => admins.id)}
                                 >
-                                  {data.years.nodes.map((years) => (
-                                    <option key={years.id} value={years.id}>
-                                      {years.year}
-                                    </option>
-                                  ))}
-                                </select>
-                              </div>
-                            </ListItem>
-                          </Box>
+                                  {data.admins.nodes.map((admins) => admins.firstname)}&nbsp;
+                                  {data.admins.nodes.map((admins) => admins.lastname)}
+                                </option>
+                              </select>
+                            </div>
+                          </ListItem>
                         </Grid>
                         <Grid item xs={12} md={6}>
                           <ListItem>

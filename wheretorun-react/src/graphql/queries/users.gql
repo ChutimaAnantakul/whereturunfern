@@ -1,0 +1,16 @@
+query users {
+  users {
+    nodes{
+      id
+    firstname
+      lastname
+      email
+      password
+      phone
+      idcard
+      birthdate
+      gender
+      profileimageurl
+    }
+  }
+}

@@ -1,34 +1,38 @@
-query notification{
-  uploads(
+query users {
+  users {
+    nodes{
+      id
+    firstname
+      lastname
+      email
+      password
+      phone
+      idcard
+      birthdate
+      gender
+      profileimageurl
+       requestapprovals(
     orderBy: EVENT_ID_ASC
     filter: {status:{equalTo:true}}
     ){
-    totalCount
-    nodes{
-      id
-      fileIacard
-      fileEvent
-      iacardName
-      eventName
-      status
-      userId
-      user{
-        id
-        firstname
-        lastname
-        email
-        password
-        gender
-        phone
-        idcard
-        birthdate
-        profileimageurl
-      }eventId
-      event{
-        id
-        eventnameTh
+      totalCount
+        nodes{
+          id
+      		linkdrive
+      		status
+      		userId
+          eventId
+          event{
+        		id
+        		eventnameTh
+            coverphotourl
+            organizer
+            startdate
+            enddate
+            linkurl
+      }
+        }
       }
     }
   }
 }
-

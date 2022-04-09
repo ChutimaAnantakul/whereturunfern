@@ -14,6 +14,7 @@ query categoryevmraceqwq {
       id
       categorynameTh
       categorynameEn
+      followcategory
     }
   }
   categoryevents(orderBy: EVENT_ID_ASC) {

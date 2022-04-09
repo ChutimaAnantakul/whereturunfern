@@ -1,6 +1,0 @@
-query year($id: UUID!) {
-  year(id: $id) {
-    id
-    year
-  }
-}

@@ -53,7 +53,7 @@ const Approvals = ({ match, history }) => {
 
     const [valueid, setid] = useState();
 
-    const [updateRequestApprovals] = useMutation(updateUploadMutations);
+    const [updateUpload] = useMutation(updateUploadMutations);
 
     const [status, setstatus] = React.useState({
         checkedA: true,
@@ -66,7 +66,7 @@ const Approvals = ({ match, history }) => {
         // });
         const status = e.target.checked;
         console.log(status);
-        const { data } = await updateRequestApprovals({
+        const { data } = await updateUpload({
             variables: {
                 id,
                 status,
@@ -207,16 +207,7 @@ const Approvals = ({ match, history }) => {
                                                                         <h6>ชื่องาน</h6>
                                                                     </div>
                                                                 </TableCell>
-                                                                <TableCell>
-                                                                    <div>
-                                                                        <h6>ไฟล์สำเนาบัตรประชาชน</h6>
-                                                                    </div>
-                                                                </TableCell>
-                                                                <TableCell>
-                                                                    <div>
-                                                                        <h6>ไฟล์งานวิ่ง</h6>
-                                                                    </div>
-                                                                </TableCell>
+                                                            
 
                                                                 <TableCell align="center">
                                                                     <div>
@@ -225,99 +216,36 @@ const Approvals = ({ match, history }) => {
                                                                 </TableCell>
                                                             </TableRow>
                                                         </TableHead>
-                                                        {/* <TableBody>
-                                                                <TableRow hover role="checkbox" tabIndex={-1}>
-                                                                    <TableCell align="left">
-                                                                        <div>
-                                                                            <h6>
-                                                                                {data.requestapproval.user.firstname}
-                                                                                &nbsp;{data.requestapproval.user.lastname}
-                                                                            </h6>
-                                                                        </div>
-                                                                    </TableCell>
-                                                                    <TableCell align="left">
-                                                                        <div>
-                                                                            <h6>
-                                                                                {data.requestapproval.event.eventnameTh}
-                                                                            </h6>
-                                                                        </div>
-                                                                    </TableCell>
-                                                                    <TableCell align="left">
-                                                                        <div>
-                                                                            <h6>
-                                                                                {data.requestapproval.fileIacard}
-                                                                            </h6>
-                                                                        </div>
-                                                                    </TableCell>
-                                                                    <TableCell>
-                                                                        <div>
-                                                                            <h6>
-                                                                                {data.requestapproval.fileEvent}
-                                                                            </h6>
-                                                                        </div>
-                                                                    </TableCell>
-                                                                    <TableCell align="center">
-                                                                        
-                                                                        <FormControlLabel
-                                                                            control={
-                                                                                <Switch
-                                                                                    checked={status.checkedB}
-                                                                                    onChange={handleChangeSwitch}
-                                                                                />
-                                                                                
-                                                                            }
-                                                                        />
-                                                                    </TableCell>
-                                                                </TableRow>
-                                                        </TableBody> */}
+                                                        
 
                                                         <TableBody>
                                                             <TableRow hover role="checkbox" tabIndex={-1}>
                                                                 <TableCell align="left">
                                                                     <div>
                                                                         <h6>
-                                                                            {data.upload.user.firstname}
-                                                                            &nbsp;{data.upload.user.lastname}
+                                                                            {data.requestapproval.user.firstname}
+                                                                            &nbsp;{data.requestapproval.user.lastname}
                                                                         </h6>
                                                                     </div>
                                                                 </TableCell>
                                                                 <TableCell align="left">
                                                                     <div>
                                                                         <h6>
-                                                                            {data.upload.event.eventnameTh}
-                                                                        </h6>
-                                                                    </div>
-                                                                </TableCell>
-                                                                <TableCell>
-                                                                    <div>
-                                                                        <h6>
+                                                                            
                                                                             <a
-                                                                                href={data.upload.fileIacard}
+                                                                                href={data.requestapproval.linkdrive}
                                                                                 download
                                                                                 target="_blank"
                                                                                 className={classes.flink}
                                                                             ><u>
-                                                                                    {data.upload.iacardName}
+                                                                                    {data.requestapproval.event.eventnameTh}
                                                                                 </u>
                                                                             </a>
                                                                         </h6>
                                                                     </div>
                                                                 </TableCell>
-                                                                <TableCell>
-                                                                    <div>
-                                                                        <h6>
-                                                                        <a
-                                                                                href={data.upload.fileEvent}
-                                                                                download
-                                                                                target="_blank"
-                                                                                className={classes.flink}
-                                                                            ><u>
-                                                                            {data.upload.eventName}
-                                                                            </u>
-                                                                            </a>
-                                                                        </h6>
-                                                                    </div>
-                                                                </TableCell>
+                                                                
+                                                               
                                                                 <TableCell align="center">
 
                                                                     <FormControlLabel

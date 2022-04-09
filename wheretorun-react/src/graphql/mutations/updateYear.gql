@@ -1,8 +1,0 @@
-mutation Edityear($id: UUID!, $year: Int!) {
-  updateYear(input: { id: $id, patch: { year: $year } }) {
-    year {
-      id
-      year
-    }
-  }
-}

@@ -1,0 +1,18 @@
+mutation createFollowing($eventgroupId: UUID!) {
+  createFollowing(
+    input: {
+      following: {
+        eventgroupId: $eventgroupId
+        userId: "584b9232-a661-4b7b-98d3-5b0ab71efc78"
+        follow: true
+      }
+    }
+  ) {
+    following {
+        id
+      eventgroupId
+      userId
+      follow
+    }
+  }
+}

@@ -1,10 +1,7 @@
 query approvaluploadID($id:UUID!){
-  upload(id:$id){
+  requestapproval(id:$id){
     id
-    fileIacard
-    fileEvent
-    iacardName
-    eventName
+    linkdrive
     status
     userId
       user{

@@ -2,7 +2,7 @@ mutation updateUpload(
   $id: UUID!,
   $status: Boolean
 ) {
-  updateUpload(
+  updateRequestapproval(
     input: {
       id: $id
       patch: {
@@ -10,10 +10,9 @@ mutation updateUpload(
       }
     }
   ) {
-    upload {
+    requestapproval {
       id
       status
     }
   }
 }
-

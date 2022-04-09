@@ -6,7 +6,7 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import DatePicker from "gestalt-datepicker";
 import "gestalt-datepicker/dist/gestalt-datepicker.css";
-import "gestalt/dist/gestalt.css";
+// import "gestalt/dist/gestalt.css";
 import Topbar from "../../../components/topbar/Topbar";
 import Sidebar from "../../../components/sidebar/Sidebar";
 import Button from "@mui/material/Button";
@@ -47,7 +47,7 @@ function EditEvent({ match, history }) {
   const [show, setShow] = useState(false);
   const toggleModal = () => setShow(!show);
 
-  const [valueid, setid] = useState();
+  const [valueid] = useState();
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [startDate2, setStartDate2] = useState();
@@ -66,7 +66,7 @@ function EditEvent({ match, history }) {
   const [poster, setposter] = useState();
   const [facebookurl, setfacebookurl] = useState();
   const [hashtag, sethashtag] = useState();
-  const [yearId, setyearId] = useState();
+
   const [awardphoto, setawardphoto] = useState();
   const [provinceId, setprovinceId] = useState();
   const [shirtsize, setshirtsize] = useState();
@@ -92,7 +92,7 @@ function EditEvent({ match, history }) {
   const posterRef = useRef();
   const facebookurlRef = useRef();
   const hashtagRef = useRef();
-  const yearIdRef = useRef();
+
   const awardphotoRef = useRef();
   const provinceIdRef = useRef();
   const shirtsizeRef = useRef();
@@ -113,7 +113,6 @@ function EditEvent({ match, history }) {
       applicationdeadlineRef.current.value === "" ||
       startdateRef.current.value === "" ||
       enddateRef.current.value === "" ||
-      yearIdRef.current.value === "" ||
       hashtagRef.current.value === "" ||
       linkurlRef.current.value === "" ||
       // facebookurlRef.current.value === "" ||
@@ -154,7 +153,7 @@ function EditEvent({ match, history }) {
       const facebookurl = facebookurlRef.current.value;
       const organizer = organizerRef.current.value;
       const provinceId = provinceIdRef.current.value;
-      const yearId = yearIdRef.current.value;
+
       const eventgroupId = eventgroupIdRef.current.value;
 
       const { data } = await updateEditEvent({
@@ -181,11 +180,10 @@ function EditEvent({ match, history }) {
           awardphoto,
           shirtsize,
           provinceId,
-          yearId,
           eventgroupId,
         },
       });
-
+      console.log(data);
       history.push(`/edit`);
       window.location.reload();
     }
@@ -376,7 +374,6 @@ function EditEvent({ match, history }) {
                                 onChange={() =>
                                   seteventnameEn(eventnameEnRef.current.value)
                                 }
-
                                 pattern="[A-Za-z0-9,():;* '%#<>_^|./\\s]*"
                                 title="กรุณากรอกตัวอักษรเป็นภาษาอังกฤษ"
                                 required
@@ -644,45 +641,7 @@ function EditEvent({ match, history }) {
                             </LocalizationProvider>
                           </ListItem>
                         </Grid>
-                        <Grid item xs={12} md={6}>
-                          <Box>
-                            <ListItem>
-                              <ListItemAvatar>
-                                <Avatar>
-                                  <DateRangeIcon />
-                                </Avatar>
-                              </ListItemAvatar>
-                              <div className="form col-md-11 ">
-                                <label>ปีที่จัดงาน</label>
-                                <select
-                                  className="form-select"
-                                  aria-label="Default select example"
-                                  // defaultValue={data.event.year.year}
-                                  value={yearId}
-                                  ref={yearIdRef}
-                                  onChange={() =>
-                                    setyearId(yearIdRef.current.value)
-                                  }
-                                  required
-                                  // disabled
-                                >
-                                  <option
-                                    // selected
-                                    key={data.event.year.id}
-                                    value={data.event.year.id}
-                                  >
-                                    {data.event.year.year}
-                                  </option>
-                                  {data.years.nodes.map((years) => (
-                                    <option key={years.id} value={years.id}>
-                                      {years.year}
-                                    </option>
-                                  ))}
-                                </select>
-                              </div>
-                            </ListItem>
-                          </Box>
-                        </Grid>
+
                         <Grid item xs={12} md={6}>
                           <ListItem>
                             <ListItemAvatar>

@@ -1,0 +1,18 @@
+mutation FollowCategory(
+  $id: UUID!
+  $followcategory:Boolean!
+) {
+  updateCategory(
+    input: {
+      id: $id
+      patch: {
+        followcategory: $followcategory
+      }
+    }
+  ) {
+    category {
+      id
+      followcategory
+    }
+  }
+}

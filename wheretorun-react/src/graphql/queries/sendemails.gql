@@ -1,0 +1,19 @@
+query sendemails {
+  sendemails(orderBy:FIRSTNAME_ASC){
+    totalCount
+    nodes {
+      id
+      firstname
+      lastname
+      eventgroupsId
+    }
+  }
+  eventgroups{
+    nodes{
+      id
+       eventgroupnameTh
+        eventgroupnameEn
+        follow
+    }
+  }
+}

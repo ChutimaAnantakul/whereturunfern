@@ -1,0 +1,33 @@
+mutation updateUser(
+  $id: UUID!
+  $firstname: String!
+  $lastname: String!
+  $birthdate: Date!
+  $phone: String!
+  $gender: String!
+  $profileimageurl: String!
+) {
+  updateUser(
+    input: {
+      id: $id
+      patch: {
+        firstname: $firstname
+        lastname: $lastname
+        birthdate: $birthdate
+        phone: $phone
+        gender: $gender
+        profileimageurl: $profileimageurl
+      }
+    }
+  ) {
+    user {
+      id
+      firstname
+      lastname
+      birthdate
+      phone
+      gender
+      profileimageurl
+    }
+  }
+}

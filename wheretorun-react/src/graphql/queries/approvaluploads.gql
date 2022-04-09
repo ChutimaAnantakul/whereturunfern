@@ -1,15 +1,12 @@
-query uploads{
-  uploads(
+query requestapprovals{
+  requestapprovals(
     orderBy: EVENT_ID_ASC
     filter: {status:{equalTo:false}}
     ){
     totalCount
     nodes{
       id
-      fileIacard
-      fileEvent
-      iacardName
-      eventName
+      linkdrive
       status
       userId
       user{

@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import { useMutation, useQuery } from "@apollo/client";
+import emailjs from "emailjs-com";
 import { loader } from "graphql.macro";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
@@ -105,12 +106,12 @@ const CreatedCategoryEvent = ({ history }) => {
     ) {
       return;
     } else {
-      e.preventDefault();
-      alert("You have submitted the form.");
+      // e.preventDefault();
+      // alert("You have submitted the form.");
 
       const eventId = eventIdofcategoryRef.current.value;
       const categoryId = categoryIdRef.current.value;
-
+      console.log(eventId, categoryId);
       const { data } = await createCategories({
         variables: {
           eventId,
@@ -118,7 +119,7 @@ const CreatedCategoryEvent = ({ history }) => {
         },
       });
 
-      window.location.reload();
+      // window.location.reload();
       history.push(`/createdCategoryEvent`);
     }
   };
@@ -146,6 +147,32 @@ const CreatedCategoryEvent = ({ history }) => {
 
   const classes = useStyles();
 
+  function sendEmail(e) {
+    e.preventDefault();
+    const check = categoryIdRef.current.value;
+    const ch = data.categories.nodes.map((categories) => categories.id);
+    for (let index = 0; index < ch.length; index++) {
+      if (ch[index] == check) {
+        const i = data.categories.nodes.map((categories) => categories.followcategory);
+        if (i[index].toString() == "true") {
+          emailjs.sendForm('service_j7djfxt', 'template_6wtm3i6', e.target, 'J0SPKCeWlRoIWQzC6')
+            .then((result) => {
+            },
+              (error) => {
+                console.log(error.text);
+              });
+          e.target.reset()
+        }
+        console.log(i[index])
+        // console.log(ch[index]+" : "+check)
+
+      } else {
+        const i = data.categories.nodes.map((categories) => categories.followcategory);
+        // console.log("dfsfsdf"+i[index])
+      }
+    }
+  }
+
   const { error, loading, data } = useQuery(categoryEventQueries);
 
   if (loading) {
@@ -154,6 +181,7 @@ const CreatedCategoryEvent = ({ history }) => {
   if (error) {
     return "error";
   }
+  // console.log(data.categories.nodes.map((categories) => categories.followcategory))
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -176,9 +204,9 @@ const CreatedCategoryEvent = ({ history }) => {
             // lg={12}
             spacing={2}
             container
-            // sx={{
-            //   bgcolor: "#EDEEF7",
-            // }}
+          // sx={{
+          //   bgcolor: "#EDEEF7",
+          // }}
           >
             <Grid
               item
@@ -419,7 +447,7 @@ const CreatedCategoryEvent = ({ history }) => {
                         fullWidth
                       >
                         <br />
-                        <form>
+                        <form onSubmit={sendEmail}>
                           <Grid container spacing={3}>
                             <Grid
                               item
@@ -439,6 +467,7 @@ const CreatedCategoryEvent = ({ history }) => {
                                   <select
                                     className="form-select"
                                     aria-label="Default select example"
+                                    name="eventId"
                                     ref={eventIdofcategoryRef}
                                     required
                                   >
@@ -470,6 +499,7 @@ const CreatedCategoryEvent = ({ history }) => {
                                   <select
                                     className="form-select"
                                     aria-label="Default select example"
+                                    name="categoryId"
                                     ref={categoryIdRef}
                                     required
                                   >
@@ -655,8 +685,8 @@ const CreatedCategoryEvent = ({ history }) => {
                                         variant="contained"
                                         color="inherit"
                                         key={categoryevents.id}
-                                        // href={`/eventgroup/${eventgroup.id}`}
-                                        // onClick={EdittoggleModal}
+                                      // href={`/eventgroup/${eventgroup.id}`}
+                                      // onClick={EdittoggleModal}
                                       >
                                         <EditIcon />
                                         &nbsp;Edit
@@ -670,8 +700,8 @@ const CreatedCategoryEvent = ({ history }) => {
                                         variant="contained"
                                         color="secondary"
                                         key={categoryevents.id}
-                                        // key={categories.id}
-                                        // onClick={toggleModal}
+                                      // key={categories.id}
+                                      // onClick={toggleModal}
                                       >
                                         <DeleteIcon />
                                         &nbsp; Delete

@@ -1,8 +1,0 @@
-query years {
-  years(orderBy: YEAR_DESC) {
-    nodes {
-      id
-      year
-    }
-  }
-}

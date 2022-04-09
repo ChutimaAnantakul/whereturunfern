@@ -27,6 +27,7 @@ import CreatedEvent from "./pages/Admin/Event/CreatedEvent";
 import EditEvent from "./pages/Admin/Event/EditEvent";
 import EditEventORG from "./pages/Admin/Event/EditEventOrg";
 import EditEventHome from "./pages/Admin/Event/EditEventHome";
+import OrgHome from "./pages/Admin/Event/OrgHome";
 //categoryevent
 import CreatedCategoryEvent from "./pages/Admin/CategoryEvent/CreatedCategoryEvent";
 import EditCategoryEvent from "./pages/Admin/CategoryEvent/EditCategoryEvent";
@@ -55,10 +56,6 @@ import DeletedEnvironment from "./pages/Admin/Environment/DeletedEnvironment";
 import Race from "./pages/Admin/Race/Race";
 import EditRace from "./pages/Admin/Race/EditRace";
 import DeletedRace from "./pages/Admin/Race/DeletedRace";
-// year
-import Year from "./pages/Admin/Year/Year";
-import EditYear from "./pages/Admin/Year/EditYear";
-import DeletedYear from "./pages/Admin/Year/DeletedYear";
 
 // requestapproval
 import Approvals from "./pages/Admin/Approval/Approvals";
@@ -67,8 +64,13 @@ import AllApprovals from "./pages/Admin/Approval/AllApprovals";
 import Request from "./pages/Request";
 
 // profile
-import Profile from "./pages/Profile";
-import ProfileAdmin from "./pages/ProfileAdmin";
+import ProfileOrganizer from "./pages/Admin/profile/ProfileOrganizer";
+import ProfileAdmin from "./pages/Admin/profile/ProfileAdmin";
+import ProfileMember from "./pages/Admin/profile/ProfileMember";
+
+// edit profile
+import EditMemberProfile from "./pages/Admin/profile/EditMemberProfile";
+import EditOrganzerProfile from "./pages/Admin/profile/EditOrganzerProfile";
 
 // ranking
 import TypeOfRank from "./pages/TypeOfRank";
@@ -78,12 +80,15 @@ import AllRanking from "./pages/AllRanking";
 // calendar
 import Calender from "./pages/Calender";
 
+// follow category
+import FollowCategory from "./pages/FollowCategory";
+// import CateFollow from "./pages/CateFollow";
+
 // test
 import Upload from "./pages/Upload";
 import UploadRequest from "./pages/UploadRequest";
 // import ContactUs from "./pages/contactForm";
 import sendEmail from "./pages/EmailForm";
-// import Language from "./pages/Language";
 // import ApprovalUpload from "./pages/ApprovalUpload";
 // import EditOrg from "./pages/EditOrg";
 
@@ -116,8 +121,12 @@ ReactDOM.render(
           <Route path="/searchCategoryEvent" component={SearchCategoryEvent} />
           <Route path="/searchEventGroup" component={SearchEventGroup} />
           {/* profile */}
-          <Route path="/profile/:id" component={Profile} />
+          <Route path="/profileorganizer/:id" component={ProfileOrganizer} />
           <Route path="/profileadmin/:id" component={ProfileAdmin} />
+          <Route path="/profilemember/:id" component={ProfileMember} />
+          {/* edit profile */}
+          <Route path="/editprofilemember/:id" component={EditMemberProfile} />
+          <Route path="/editprofileorganizer/:id" component={EditOrganzerProfile} />
            {/* event */}
           <Route path="/createdEvent" component={CreatedEvent} />
           <Route path="/editEvent/:id" component={EditEvent} />
@@ -135,6 +144,7 @@ ReactDOM.render(
           <Route path="/editRaceEvent/:id" component={EditRaceEvent} />
           <Route path="/delRaceEvent/:id" component={DeletedRaceEvent} />
           <Route path="/edit" component={EditEventHome} />
+          <Route path="/orghome" component={OrgHome} />
           {/* eventgroup */}
           <Route path="/eventgroup" component={EventGroup} />
           <Route path="/editeventgroup/:id" component={EditEventGroup} />
@@ -151,10 +161,6 @@ ReactDOM.render(
           <Route path="/race" component={Race} />
           <Route path="/editrace/:id" component={EditRace} />
           <Route path="/delrace/:id" component={DeletedRace} />
-          {/* yaer */}
-          <Route path="/year" component={Year} />
-          <Route path="/edityear/:id" component={EditYear} />
-          <Route path="/delyear/:id" component={DeletedYear} />
 
           {/* approval */}
           <Route path="/allapproval" component={AllApprovals} />
@@ -170,12 +176,16 @@ ReactDOM.render(
           {/* calendar */}
           <Route path="/calendar" component={Calender} />
 
+           {/* follow category */}
+           <Route path="/followcate" component={FollowCategory} />
+          {/* <Route path="/folcate" component={CateFollow} /> */}
+
           {/* test */}
           <Route path="/up" component={Upload} />
           <Route path="/uprequest" component={UploadRequest} />
+          
           {/* <Route path="/con" component={ContactUs} /> */}
           <Route path="/send" component={EmailForm} />
-          {/* <Route path="/lan" component={Language} /> */}
           {/* <Route path="/testallap" component={ApprovalUpload} /> */}
           {/* <Route path="/org/:id" component={EditOrg} /> */}
 

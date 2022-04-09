@@ -37,10 +37,6 @@ query searcheventgroup($eventgroupnameTh: String!) {
             provinceTh
             provinceEn
           }
-          yearId
-          year {
-            year
-          }
           eventgroupId
         }
       }

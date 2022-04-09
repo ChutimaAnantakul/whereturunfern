@@ -1,15 +1,12 @@
 query passtapprovaluploads{
-  uploads(
+  requestapprovals(
     orderBy: EVENT_ID_ASC
     filter: {status:{equalTo:true}}
     ){
       totalCount
     nodes{
       id
-      fileIacard
-      fileEvent
-      iacardName
-      eventName
+      linkdrive
       status
       userId
       user{
@@ -31,5 +28,6 @@ query passtapprovaluploads{
     }
   }
 }
+
 
 

@@ -28,10 +28,6 @@ query eventsh0j8ipij {
         provinceTh
         provinceEn
       }
-      yearId
-      year {
-        year
-      }
       eventgroupId
     }
   }

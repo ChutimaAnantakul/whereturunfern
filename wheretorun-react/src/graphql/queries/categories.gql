@@ -5,6 +5,7 @@ query category {
       id
       categorynameTh
       categorynameEn
+      followcategory
     }
   }
 }

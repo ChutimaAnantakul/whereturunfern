@@ -1,0 +1,26 @@
+query provinceseventgroupss {
+  provinces(orderBy: PROVINCE_TH_ASC) {
+    nodes {
+      id
+      provinceTh
+      provinceEn
+    }
+  }
+  eventgroups(orderBy: EVENTGROUPNAME_TH_ASC) {
+    nodes {
+      id
+      eventgroupnameTh
+      eventgroupnameEn
+      follow
+    }
+  }
+  admins{
+    nodes{
+      id
+      firstname
+    lastname
+    email
+    password
+    }
+  } 
+}

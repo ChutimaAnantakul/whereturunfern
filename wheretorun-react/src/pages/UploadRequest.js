@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import Topbar from "../components/topbar/Topbar";
+import Topbar from "../components/notification/Notifica";
 import Sidebar from "../components/sidebar/Sidebar";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
@@ -26,6 +26,9 @@ import ListItem from "@mui/material/ListItem";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 
+//page
+import Navbar from "../pages/layout/Navbar";
+
 // icon
 import EventIcon from "@mui/icons-material/Event";
 import EditIcon from "@mui/icons-material/Edit";
@@ -35,21 +38,19 @@ import DoneIcon from "@material-ui/icons/Done";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import CancelIcon from "@mui/icons-material/Cancel";
 
+
 //graphql
 const requesteventQueries = loader(
   "../graphql/queries/requestevent.gql"
 );
-const createUploadMutations = loader(
-  "../graphql/mutations/createUpload.gql"
+const createRequestapprovalMutations = loader(
+  "../graphql/mutations/createRequestapproval.gql"
 );
 
 function UploadRequest({ history }) {
 
-  const [createUpload] = useMutation(createUploadMutations);
-  const fileIacardRef = useRef();
-  const fileEventRef = useRef();
-  const iacardNameRef = useRef();
-  const eventNameRef = useRef();
+  const [createRequestapproval] = useMutation(createRequestapprovalMutations);
+  const linkdriveRef = useRef();
   const eventIdRef = useRef();
 
   const [selectedFile, setSelectedFile] = useState();
@@ -64,10 +65,7 @@ function UploadRequest({ history }) {
   const handleSubmit = async (e) => {
     if (
       eventIdRef.current.value === "" ||
-      fileIacardRef.current.value === "" ||
-      fileEventRef.current.value === "" ||
-      iacardNameRef.current.value === "" ||
-      eventNameRef.current.value === "" 
+      linkdriveRef.current.value === ""  
     ) {
       return;
     } else {
@@ -75,19 +73,14 @@ function UploadRequest({ history }) {
       alert("You have submitted the form.");
 
       const eventId = eventIdRef.current.value;
-      const fileIacard = fileIacardRef.current.value;
-      const fileEvent = fileEventRef.current.value;
-      const iacardName = iacardNameRef.current.value;
-      const eventName = eventNameRef.current.value;
-      console.log(eventId, fileIacard, iacardName, fileEvent, eventName);
-      const { data } = await createUpload({
+      const linkdrive = linkdriveRef.current.value;
+      
+      console.log(eventId, linkdrive);
+      const { data } = await createRequestapproval({
         variables: {
           // id,
           eventId,
-          fileIacard,
-          fileEvent,
-          iacardName,
-          eventName,
+          linkdrive
         },
       });
       window.location.reload();
@@ -114,8 +107,8 @@ function UploadRequest({ history }) {
 
   return (
     <Box sx={{ display: "flex" }}>
-      <Topbar />
-      <Sidebar />
+      <Navbar />
+      {/* <Sidebar /> */}
       <Box
         component="main"
         sx={{
@@ -204,22 +197,23 @@ function UploadRequest({ history }) {
                       >
                         <form>
                           <Grid container spacing={3}>
+                          
                             <Grid
                               item
                               xs={12}
                               sx={{
-                                mr: 17,
+                                mr: 10,
+                                // mb: 2,
+                                // mt: 2,
                               }}
                             >
                               <ListItem>
-                                <div className="form col-md-3 "></div>
                                 <ListItemAvatar>
                                   <Avatar>
                                     <EventIcon />
                                   </Avatar>
                                 </ListItemAvatar>
-
-                                <div className="form col-md-6 ">
+                                <div className="form col-md-5 ">
                                   <label>ชื่องานวิ่ง</label>
                                   <select
                                     className="form-select"
@@ -246,51 +240,19 @@ function UploadRequest({ history }) {
                                     ))}
                                   </select>
                                 </div>
-                                <div className="form col-md-3 "></div>
-                              </ListItem>
-                            </Grid>
-                            <Grid
-                              item
-                              xs={12}
-                              sx={{
-                                mr: 10,
-                                // mb: 2,
-                                // mt: 2,
-                              }}
-                            >
-                              <ListItem>
-                                <ListItemAvatar>
-                                  <Avatar>
-                                    <EventIcon />
-                                  </Avatar>
-                                </ListItemAvatar>
-                                <div className="form col-md-5 ">
-                                  <label>ชื่อไฟล์สำเนาบัตรประชาชน</label>
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    aria-describedby="emailHelp"
-                                    id="outlined-basic"
-                                    variant="outlined"
-                                    placeholder="ชื่อไฟล์สำเนาบัตรประชาชน"
-                                    ref={iacardNameRef}
-                                    required
-                                    fullWidth
-                                  />
-                                </div>
                                 <ListItemAvatar>
                                   <Avatar>
                                     <EventIcon />
                                   </Avatar>
                                 </ListItemAvatar>
                                 <div className="form col-md-6 ">
-                                  <label>ลิ้งค์ไฟล์สำเนาบัตรประชาชน</label>
+                                  <label>ลิ้งค์ไดรฟ์</label>
                                   <input
                                     type="text"
                                     className="form-control"
                                     aria-describedby="emailHelp"
                                     required
-                                    ref={fileIacardRef}
+                                    ref={linkdriveRef}
                                     accept=".png,.jpg,.pdf,.docx,.gif, .jpeg, .tiff, .gif"
                                   // onChange={changeHandler}
                                   />
@@ -307,51 +269,6 @@ function UploadRequest({ history }) {
                                   ) : (
                                     <p>Select a file to show details</p>
                                   )} */}
-                                </div>
-                              </ListItem>
-                            </Grid>
-                            <Grid
-                              item
-                              xs={12}
-                              sx={{
-                                mr: 10,
-                              }}
-                            >
-                              <ListItem>
-                              <ListItemAvatar>
-                                  <Avatar>
-                                    <EventIcon />
-                                  </Avatar>
-                                </ListItemAvatar>
-                                <div className="form col-md-5 ">
-                                  <label>ชื่อไฟล์ข้อมูลงานวิ่ง</label>
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    aria-describedby="emailHelp"
-                                    id="outlined-basic"
-                                    variant="outlined"
-                                    placeholder="ชื่อไฟล์ข้อมูลงานวิ่ง"
-                                    ref={eventNameRef}
-                                    required
-                                    fullWidth
-                                  />
-                                </div>
-                                <ListItemAvatar>
-                                  <Avatar>
-                                    <EventIcon />
-                                  </Avatar>
-                                </ListItemAvatar>
-                                <div className="form col-md-6 ">
-                                  <label>ลิ้งค์ไฟล์ข้อมูลงานวิ่ง</label>
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    aria-describedby="emailHelp"
-                                    required
-                                    ref={fileEventRef}
-                                    accept=".png,.jpg,.pdf,.docx,.gif, .jpeg, .tiff, .gif"
-                                  />
                                 </div>
                               </ListItem>
                             </Grid>

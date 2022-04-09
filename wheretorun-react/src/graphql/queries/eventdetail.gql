@@ -30,7 +30,13 @@ query event($id:UUID!){
       id
       eventgroupnameTh
       eventgroupnameEn
-      followname
+      followings{
+        nodes{
+          id
+          userId
+          eventgroupId
+        }
+      }
     }
     racetypeevents{
       nodes{
@@ -76,6 +82,20 @@ query event($id:UUID!){
         ranknameEn
       }
     }
+  } 
+  users{
+    nodes{
+      id
+      firstname
+      lastname
+      profileimageurl
+    }
+  }
+  follownames{
+    nodes{
+      id
+      followName
+      status
+    }
   }
 }
-  

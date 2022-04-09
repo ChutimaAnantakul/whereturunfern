@@ -1,0 +1,47 @@
+query orghome {
+  requestapprovals{
+    totalCount
+    nodes {
+      id
+      linkdrive
+      status
+      userId
+      user{
+        id
+        firstname
+        lastname
+        profileimageurl
+      }
+      eventId
+      event{
+        id
+        eventnameTh
+      eventnameEn
+      locationTh
+      locationEn
+      linkurl
+      coverphotourl
+      startdate
+      enddate
+      openforapplications
+      applicationdeadline
+      descriptionTh
+      descriptionEn
+      hashtag
+      organizer
+      latitude
+      longitude
+      poster
+      awardphoto
+      shirtsize
+      facebookurl
+      provinceId
+      province {
+        provinceTh
+        provinceEn
+      }
+      eventgroupId
+      }
+    }
+  }
+}

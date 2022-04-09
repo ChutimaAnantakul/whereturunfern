@@ -7,6 +7,7 @@ import Toolbar from "@mui/material/Toolbar";
 import DatePicker from "gestalt-datepicker";
 import "gestalt-datepicker/dist/gestalt-datepicker.css";
 import "gestalt/dist/gestalt.css";
+import { makeStyles } from "@material-ui/core/styles";
 import Topbar from "../../../components/topbar/Topbar";
 import Sidebar from "../../../components/sidebar/Sidebar";
 import Button from "@mui/material/Button";
@@ -22,6 +23,7 @@ import CardContent from "@mui/material/CardContent";
 import Modal from "@mui/material/Modal";
 import Divider from "@mui/material/Divider";
 import Slide from "@mui/material/Slide";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 // icon
 import ImageIcon from "@mui/icons-material/Image";
@@ -37,13 +39,31 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Cancel";
 
+//page
+import Navbar from "../../../pages/layout/OrgNavbar";
+
 //graphql
 const updateEditEventMutations = loader(
   "../../../graphql/mutations/updateEditEvent.gql"
 );
 const eventseditQuery = loader("../../../graphql/queries/editeventID.gql");
 
+const theme = createTheme();
+
 function EditEventORG({ match, history }) {
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      flexGrow: 1,
+      width: "100%",
+      backgroundColor: theme.palette.background.paper,
+    },
+    backdrop: {
+      zIndex: theme.zIndex.drawer + 1,
+      color: "#fff",
+    },
+  }));
+  const classes = useStyles();
+
   const [show, setShow] = useState(false);
   const toggleModal = () => setShow(!show);
 
@@ -213,7 +233,7 @@ function EditEventORG({ match, history }) {
   // console.log(data.event.requestapprovals);
 
   // if check try=ue false
-  const dis = data.event.uploads.nodes.map((uploads) => uploads.status); 
+  const dis = data.event.requestapprovals.nodes.map((requestapprovals) => requestapprovals.status); 
   const disa = dis[0];
   if(disabled===disa){
     return setDisabled(!disabled)
@@ -224,7 +244,7 @@ function EditEventORG({ match, history }) {
 
   return (
     <Box sx={{ display: "flex" }}>
-      {/* <Topbar /> */}
+      <Navbar />
       {/* <Sidebar /> */}
       <Box
         component="main"
@@ -724,45 +744,6 @@ function EditEventORG({ match, history }) {
                               </div>
                             </LocalizationProvider>
                           </ListItem>
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                          <Box>
-                            <ListItem>
-                              <ListItemAvatar>
-                                <Avatar>
-                                  <DateRangeIcon />
-                                </Avatar>
-                              </ListItemAvatar>
-                              <div className="form col-md-11 ">
-                                <label>ปีที่จัดงาน</label>
-                                <select
-                                  className="form-select"
-                                  aria-label="Default select example"
-                                  // defaultValue={data.event.year.year}
-                                  value={yearId}
-                                  ref={yearIdRef}
-                                  onChange={() =>
-                                    setyearId(yearIdRef.current.value)
-                                  }
-                                  required
-                                  disabled
-                                >
-                                  <option
-                                    // selected
-                                    key={data.event.year.id}
-                                    value={data.event.year.id}
-                                  >
-                                    {data.event.year.year}
-                                  </option>
-                                  {data.years.nodes.map((years) => (
-                                    <option key={years.id} value={years.id}>
-                                      {years.year}
-                                    </option>
-                                  ))}
-                                </select>
-                              </div>
-                            </ListItem>
-                          </Box>
                         </Grid>
                         <Grid item xs={12} md={6}>
                           <ListItem>

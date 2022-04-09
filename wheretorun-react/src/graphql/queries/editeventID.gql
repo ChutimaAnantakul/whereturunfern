@@ -21,11 +21,8 @@ query eventID($id: UUID!) {
     awardphoto
     shirtsize
     facebookurl
-    yearId
-    year {
-      id
-      year
-    }
+    status
+    
     provinceId
     province {
       id
@@ -38,25 +35,19 @@ query eventID($id: UUID!) {
       eventgroupnameTh
       eventgroupnameEn
     }
-    adminId
-    admin {
-      id
-      firstname
-      lastname
-    }
-    uploads{
+   requestapprovals{
       nodes{
-        fileEvent
-        fileIacard
+        id
         status
       }
     }
   }
-  eventgroups {
+  eventgroups(orderBy: EVENTGROUPNAME_TH_ASC) {
     nodes {
       id
       eventgroupnameTh
       eventgroupnameEn
+      follow
     }
   }
   provinces(orderBy: PROVINCE_TH_ASC) {
@@ -65,11 +56,5 @@ query eventID($id: UUID!) {
       provinceTh
       provinceEn
     }
-  }
-  years(orderBy: YEAR_DESC) {
-    nodes {
-      id
-      year
-    }
-  }
+  } 
 }

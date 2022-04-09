@@ -1,0 +1,11 @@
+mutation createSendemail($firstname:String!,$lastname:String!, $eventgroupsId: UUID!){
+    createSendemail(input:{sendemail:{firstname:$firstname,lastname:$lastname,eventgroupsId:$eventgroupsId}}){
+      sendemail{
+        id
+        firstname
+        lastname
+        eventgroupsId
+      }
+    }
+  }
+  

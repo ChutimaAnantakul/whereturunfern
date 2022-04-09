@@ -1,20 +1,20 @@
 mutation updateFollow(
   $id: UUID!
-  $followname: Boolean!
+  $follow: Boolean!
 ) 
 
 {
-  updateEventgroup(
+  updateFollowing(
     input: {
       id: $id
       patch: {
-        followname: $followname
+        follow: $follow
       }
     }
   ) {
-    eventgroup {
+    following {
       id
-      followname
+      follow
     }
   }
 }

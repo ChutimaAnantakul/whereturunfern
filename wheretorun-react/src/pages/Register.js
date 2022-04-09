@@ -237,7 +237,7 @@ const Register = ({ history }) => {
                                 placeholder="x-xxxx-xxxxx-xx-x"
                                 maxLength="13"
                                 pattern="^\d{1}-\d{4}-\d{5}-\d{2}-\d{1}$"
-                                pattern="^\d{13}$"
+                                // pattern="^\d{13}$"
                                 required
                               />
                               <span

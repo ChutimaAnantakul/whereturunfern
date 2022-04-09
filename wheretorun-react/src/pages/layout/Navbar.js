@@ -1,6 +1,10 @@
 
 import React from "react";
 import Box from "@mui/material/Box";
+import { Link, useHistory } from "react-router-dom";
+import { useMutation, useQuery } from "@apollo/client";
+import { loader } from "graphql.macro";
+import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -9,6 +13,10 @@ import Button from "@mui/material/Button";
 import Badge from "@mui/material/Badge";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
+import DateRangeIcon from "@mui/icons-material/DateRange";
+import Avatar from "@material-ui/core/Avatar";
+import { deepOrange, deepPurple } from "@material-ui/core/colors";
 
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
@@ -19,7 +27,27 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 import HomeIcon from "@material-ui/icons/Home";
 import SearchIcon from "@material-ui/icons/Search";
 
+const usersQuery = loader("../../graphql/queries/users.gql");
+
 export default function Topbar() {
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      display: "flex",
+      "& > *": {
+        margin: theme.spacing(1),
+      },
+    },
+    orange: {
+      color: theme.palette.getContrastText(deepOrange[500]),
+      backgroundColor: deepOrange[500],
+    },
+    purple: {
+      color: theme.palette.getContrastText(deepPurple[500]),
+      backgroundColor: deepPurple[500],
+    },
+  }));
+  const classes = useStyles();
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -43,21 +71,38 @@ export default function Topbar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const menuId = "primary-search-account-menu";
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{ vertical: "top", horizontal: "right" }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-    </Menu>
-  );
+  
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const { error, loading, data } = useQuery(usersQuery);
+  if (loading) {
+    return "loading...";
+  }
+  if (error) {
+    return "error";
+  }
+
+  // const menuId = "primary-search-account-menu";
+  // const renderMenu = (
+  //   <Menu
+  //     anchorEl={anchorEl}
+  //     anchorOrigin={{ vertical: "top", horizontal: "right" }}
+  //     id={menuId}
+  //     keepMounted
+  //     transformOrigin={{ vertical: "top", horizontal: "right" }}
+  //     open={isMenuOpen}
+  //     onClose={handleMenuClose}
+  //   >
+  //     <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+  //     <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+  //   </Menu>
+  // );
 
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
@@ -99,6 +144,7 @@ export default function Topbar() {
       </MenuItem>
     </Menu>
   );
+  
 
   return (
     <>
@@ -146,20 +192,55 @@ export default function Topbar() {
               <SearchIcon />
               &nbsp;<div>ค้นหางานวิ่งย้อนหลัง</div>
             </Button>
-
-            {/* <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
+            <Button
+              // size="large"
               color="inherit"
+              ariant="contained"
+              size="large"
+              href="/calendar"
             >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton> */}
+              <DateRangeIcon />
+              &nbsp;<div>ปฏทินงานวิ่ง</div>
+            </Button>
+            <Avatar
+                aria-haspopup="true"
+                onClick={handleClick}
+                className={classes.purple}
+                src={data.users.nodes.map((users) => users.profileimageurl)}
+              >
+                {data.users.nodes.map((users) => users.firstname)}
+              </Avatar>
+              <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <Link to="/profile">
+                <MenuItem onClick={handleClose}>โปรไฟล์</MenuItem>
+              </Link>
+              <Link to="/orghome">
+                <MenuItem onClick={handleClose}>สำหรับผู้จัดงาน</MenuItem>
+              </Link>
+              <MenuItem onClick={handleClose}>
+                <>ขออนุมัติ</>
+                <IconButton
+                  size="large"
+                  aria-label="show 17 new notifications"
+                  color="inherit"
+                >
+                  <Badge badgeContent={17} color="error">
+                    <NotificationsIcon />
+                  </Badge>
+                </IconButton>
+              </MenuItem>
+              {/* <MenuItem onClick={handleClose}>Logout</MenuItem> */}
+            </Menu>
             <Button
               edge="end"
               aria-label="account of current user"
-              aria-controls={menuId}
+              // aria-controls={menuId}
               aria-haspopup="true"
               onClick={handleProfileMenuOpen}
               color="inherit"
@@ -167,7 +248,7 @@ export default function Topbar() {
               size="large"
             >
               <AccountCircle />
-              &nbsp;<div>Login</div>
+              &nbsp;<div>เข้าสู่ระบบ</div>
             </Button>
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
@@ -185,7 +266,7 @@ export default function Topbar() {
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
-      {renderMenu}
+      {/* {renderMenu} */}
     </>
   );
 }

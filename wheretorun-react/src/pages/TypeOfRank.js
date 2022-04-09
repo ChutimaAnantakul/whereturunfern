@@ -58,8 +58,8 @@ function TypeOfRank({ history, match }) {
     ) {
       return;
     } else {
-      e.preventDefault();
-      alert("You have submitted the form.");
+      // e.preventDefault();
+      // alert("You have submitted the form.");
 
       const eventId = eventIdRef.current.value;
       const rankscore = Number(rankscoreRef.current.value);
@@ -73,7 +73,7 @@ function TypeOfRank({ history, match }) {
         },
       });
 
-      window.location.reload();
+      // window.location.reload();
       history.push(`/typeofranktwo/${data.createRanking.ranking.eventId}`);
     }
   };

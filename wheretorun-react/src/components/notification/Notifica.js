@@ -30,24 +30,24 @@ const NotificationQueries = loader("../../graphql/queries/notification.gql");
 
 const drawerWidth = 240;
 
-const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginRight: -drawerWidth,
-    ...(open && {
-      transition: theme.transitions.create('margin', {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      marginRight: 0,
-    }),
-  }),
-);
+// const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
+//   ({ theme, open }) => ({
+//     flexGrow: 1,
+//     padding: theme.spacing(3),
+//     transition: theme.transitions.create('margin', {
+//       easing: theme.transitions.easing.sharp,
+//       duration: theme.transitions.duration.leavingScreen,
+//     }),
+//     marginRight: -drawerWidth,
+//     ...(open && {
+//       transition: theme.transitions.create('margin', {
+//         easing: theme.transitions.easing.easeOut,
+//         duration: theme.transitions.duration.enteringScreen,
+//       }),
+//       marginRight: 0,
+//     }),
+//   }),
+// );
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
@@ -107,12 +107,14 @@ function Notifica() {
     return "error";
   }
 
-  const noti = data.uploads.totalCount;
+  const noti = data.requestapprovals.totalCount;
 
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar position="fixed" 
+      // open={open}
+      >
         <Toolbar>
           <Typography variant="h6" noWrap sx={{ flexGrow: 1 }} component="div">
             Where to Run
@@ -159,7 +161,7 @@ function Notifica() {
      
       <Drawer
         sx={{
-          width: drawerWidth,
+          // width: drawerWidth,
           flexShrink: 0,
           '& .MuiDrawer-paper': {
             width: drawerWidth,
@@ -172,10 +174,11 @@ function Notifica() {
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            <h6><b>Events {data.requestapprovals.totalCount} รายการ</b></h6>
           </IconButton>
         </DrawerHeader>
         <Divider />
-        {data.uploads.nodes.map((uploads) => (
+        {data.requestapprovals.nodes.map((requestapprovals) => (
           <List
             sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
             component="nav"
@@ -188,11 +191,11 @@ function Notifica() {
           >
             <ListItemText >
             &nbsp; &nbsp;งานวิ่ง: &nbsp;
-              <b>{uploads.event.eventnameTh}</b><br />
+              <b>{requestapprovals.event.eventnameTh}</b><br />
               &nbsp; &nbsp;ได้รับการอนุมัติแล้ว
             </ListItemText>
 
-            <Link to={`/editEventOrg/${uploads.event.id}`}>
+            <Link to={`/editEventOrg/${requestapprovals.event.id}`}>
               <ListItemButton>
                 <ListItemIcon>
                   <SendIcon />

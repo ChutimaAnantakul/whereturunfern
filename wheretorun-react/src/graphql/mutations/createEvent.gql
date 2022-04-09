@@ -10,7 +10,6 @@ mutation createEvent(
   $descriptionTh: String!
   $descriptionEn: String!
   $hashtag: String!
-  $yearId: UUID!
   $organizer: String!
   $latitude: Float!
   $longitude: Float!
@@ -22,6 +21,7 @@ mutation createEvent(
   $applicationdeadline: Date!
   $facebookurl: String!
   $eventgroupId: UUID!
+  $adminId: UUID!
 ) {
   createEvent(
     input: {
@@ -47,10 +47,9 @@ mutation createEvent(
         awardphoto: $awardphoto
         shirtsize: $shirtsize
         provinceId: $provinceId
-        yearId: $yearId
         eventgroupId: $eventgroupId
-        adminId: "c163d0f2-42c9-4072-9746-2cc6d016b9da"
-        status:true
+        adminId: $adminId
+        status: true
         avgrankscore: 0
       }
     }
@@ -78,13 +77,9 @@ mutation createEvent(
       shirtsize
       facebookurl
       provinceId
-      yearId
       eventgroupId
       adminId
-      status
       avgrankscore
     }
   }
 }
-
-  

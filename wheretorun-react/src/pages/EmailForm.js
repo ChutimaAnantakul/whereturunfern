@@ -39,10 +39,10 @@ import CancelIcon from "@mui/icons-material/Cancel";
 // import ImageIcon from "@mui/icons-material/Image";
 
 //lodergrapghl
-const createCategoryMutations = loader(
-  "../graphql/mutations/createCategory.gql"
+const createSendemailMutations = loader(
+  "../graphql/mutations/createSendemail.gql"
 );
-const categoriesQueries = loader("../graphql/queries/categories.gql");
+const sendemailsQueries = loader("../graphql/queries/sendemails.gql");
 
 const EmailForm = ({ history }) => {
   const [page, setPage] = React.useState(0);
@@ -68,45 +68,13 @@ const EmailForm = ({ history }) => {
 
   const classes = useStyles();
 
-  const [createCategory] = useMutation(createCategoryMutations);
-  const categorynameThRef = useRef();
-  const categorynameEnRef = useRef();
+  const [createSendemail] = useMutation(createSendemailMutations);
+  const firstnameRef = useRef();
+  const lastnameRef = useRef();
+  const eventgroupsIdRef = useRef();
 
-  // function sendEmail(e) {
-  //   e.preventDefault();
-
-  //   emailjs.sendForm('service_nrzagaf', 'template_ns9i3ca', e.target, 'usrgMdpsr9kWZLe0i')
-  //     .then((result) => {
-  //       console.log(result.text);
-  //     }, (error) => {
-  //       console.log(error.text);
-  //     });
-  //   e.target.reset()
-  // }
-
-  // const handleSubmit = async (e) => {
-  //   if (
-  //     categorynameThRef.current.value === "" ||
-  //     categorynameEnRef.current.value === ""
-  //   ) {
-  //     return;
-  //   } else {
-  //     e.preventDefault();
-  //     alert("You have submitted the form.");
-
-  //     const categorynameTh = categorynameThRef.current.value;
-  //     const categorynameEn = categorynameEnRef.current.value;
-  //     const { data } = await createCategory({
-  //       variables: {
-  //         // id,
-  //         categorynameTh,
-  //         categorynameEn,
-  //       },
-  //     });
-  //     window.location.reload();
-  //     history.push(`/category`);
-  //   }
-  // };
+  const [eventgroupsId, seteventgroupId] = useState();
+  // const [check, setCheck] = React.useState(true);
 
   const handleCancel = async (e) => {
     window.location.reload();
@@ -115,33 +83,53 @@ const EmailForm = ({ history }) => {
 
   function sendEmail(e) {
     e.preventDefault();
-
-    emailjs.sendForm('service_nrzagaf', 'template_rjdk914', e.target, 'usrgMdpsr9kWZLe0i')
-      .then((result) => {
-        console.log(result.text);
-      }, (error) => {
-        console.log(error.text);
-      });
-    e.target.reset()
+       const check = eventgroupsIdRef.current.value;
+       const ch = data.eventgroups.nodes.map((eventgroups) => eventgroups.id);
+       for (let index = 0; index < ch.length; index++) {
+          if (ch[index] == check) {
+            const i = data.eventgroups.nodes.map((eventgroups) => eventgroups.follow);
+              if(i[index].toString()=="true"){
+                emailjs.sendForm('service_nrzagaf', 'template_rjdk914', e.target, 'usrgMdpsr9kWZLe0i')
+                .then((result) => {
+                  console.log("OK");
+                },
+                (error) => {
+                  console.log(error.text);
+                });
+              e.target.reset()
+              }
+            console.log(i[index])
+            // console.log(ch[index]+" : "+check)
+            
+          } else {
+           const i = data.eventgroups.nodes.map((eventgroups) => eventgroups.follow);
+           // console.log("dfsfsdf"+i[index])
+          }
+       }
   }
 
+  
   const handleSubmit = async (e) => {
     if (
-      categorynameThRef.current.value === "" ||
-      categorynameEnRef.current.value === ""
+      eventgroupsIdRef.current.value === {eventgroupsId} ||
+      firstnameRef.current.value === "" ||
+      lastnameRef.current.value === ""
     ) {
       return;
     } else {
       // e.preventDefault();
       // alert("You have submitted the form.");
 
-      const categorynameTh = categorynameThRef.current.value;
-      const categorynameEn = categorynameEnRef.current.value;
-      const { data } = await createCategory({
+      const firstname = firstnameRef.current.value;
+      const lastname = lastnameRef.current.value;
+      const eventgroupsId = eventgroupsIdRef.current.value;
+      // console.log(firstname,lastname,eventgroupsId)
+      const { data } = await createSendemail({
         variables: {
           // id,
-          categorynameTh,
-          categorynameEn,
+          firstname,
+          lastname,
+          eventgroupsId,
         },
       });
       // window.location.reload();
@@ -149,8 +137,33 @@ const EmailForm = ({ history }) => {
     }
   };
 
+  // function sendEmail(e) {
+  //   e.preventDefault();
+  //      const check = eventgroupsIdRef.current.value;
+  //      const ch = data.eventgroups.nodes.map((eventgroups) => eventgroups.id);
+  //      for (let index = 0; index < ch.length; index++) {
+  //         if (ch[index] == check) {
+  //           const i = data.eventgroups.nodes.map((eventgroups) => eventgroups.follow);
+  //             if(i[index].toString()=="true"){
+  //               emailjs.sendForm('service_nrzagaf', 'template_rjdk914', e.target, 'usrgMdpsr9kWZLe0i')
+  //               .then((result) => {
+  //               },
+  //               (error) => {
+  //                 console.log(error.text);
+  //               });
+  //             e.target.reset()
+  //             }
+  //           console.log(i[index])
+  //           // console.log(ch[index]+" : "+check)
+            
+  //         } else {
+  //          const i = data.eventgroups.nodes.map((eventgroups) => eventgroups.follow);
+  //          // console.log("dfsfsdf"+i[index])
+  //         }
+  //      }
+  // }
 
-  const { error, loading, data } = useQuery(categoriesQueries);
+  const { error, loading, data } = useQuery(sendemailsQueries);
 
   if (loading) {
     return "loading...";
@@ -158,6 +171,9 @@ const EmailForm = ({ history }) => {
   if (error) {
     return "error";
   }
+
+    // eventgroupsIdRef
+
 
   return (
     <Box xs={12} sx={{ display: "flex" }}>
@@ -206,7 +222,7 @@ const EmailForm = ({ history }) => {
                     fullWidth
                   >
                     <CardContent>
-                      <h2>เพิ่มประเภทหมวดหมู่งานวิ่ง</h2>
+                      <h2>ส่งเมล</h2>
                     </CardContent>
                   </Card>
                 </Grid>
@@ -234,8 +250,48 @@ const EmailForm = ({ history }) => {
                   >
                     <div>
                       <div className="container">
-                        <form onSubmit={sendEmail}>
+                        <form  onSubmit={sendEmail}>
                           <div className="row pt-3 mx-auto">
+                            <div className="col-12 form-group mx-auto">
+                            <ListItem>
+                                <div className="form col-md-3 "></div>
+                                <ListItemAvatar>
+                                  <Avatar>
+                                    <EventIcon />
+                                  </Avatar>
+                                </ListItemAvatar>
+
+                                <div className="form col-md-6 ">
+                                  <label>ชื่อกลุ่มงานวิ่ง</label>
+                                  <select
+                                    className="form-select"
+                                    aria-label="Default select example"
+                                    name="eventgroupsId"
+                                    ref={eventgroupsIdRef}
+                                    required
+                                  >
+                                    {/* <option value={""}>None</option>
+                                    {data.events.nodes.map((event) => (
+                                      <option key={event.id} value={event.id}>
+                                        {event.eventnameTh}
+                                      </option>
+                                    ))} */}
+                                    <option value={""}>None</option>
+                                    {/* {data.uploads.nodes.map((uploads) => (
+                                      <option key={uploads.event.id} value={uploads.event.id}>
+                                        {uploads.event.eventnameTh}
+                                      </option>
+                                    ))} */}
+                                    {data.eventgroups.nodes.map((eventgroups) => (
+                                      <option key={eventgroups.id} value={eventgroups.id}>
+                                        {eventgroups.eventgroupnameTh}
+                                      </option>
+                                    ))}
+                                  </select>
+                                </div>
+                                <div className="form col-md-3 "></div>
+                              </ListItem>
+                            </div>
                             <div className="col-12 form-group mx-auto">
                               <ListItem>
                                 <ListItemAvatar>
@@ -244,8 +300,8 @@ const EmailForm = ({ history }) => {
                                   </Avatar>
                                 </ListItemAvatar>
                                 <div className="col-11 form-group mx-auto">
-                                  <label>ประเภทหมวดหมู่งานวิ่ง (ภาษาไทย)</label>
-                                  <input type="text" className="form-control" placeholder="ประเภทหมวดหมู่งานวิ่ง (ภาษาไทย)" name="categorynameTh" ref={categorynameThRef} />
+                                  <label>ชื่อ</label>
+                                  <input type="text" className="form-control" placeholder="ชื่อ" name="firstname" ref={firstnameRef} />
                                 </div>
                               </ListItem>
                             </div>
@@ -257,8 +313,8 @@ const EmailForm = ({ history }) => {
                                   </Avatar>
                                 </ListItemAvatar>
                                 <div className="col-11 form-group pt-2 mx-auto">
-                                  <label>ประเภทหมวดหมู่งานวิ่ง (ภาษาอังกฤษ)</label>
-                                  <input type="text" className="form-control" placeholder="ประเภทหมวดหมู่งานวิ่ง (ภาษาอังกฤษ)" name="categorynameEn" ref={categorynameEnRef}
+                                  <label>นามสกุล</label>
+                                  <input type="text" className="form-control" placeholder="นามสกุล" name="lastname" ref={lastnameRef}
                                     pattern="[A-Za-z\s]*"
                                     title="กรุณากรอกตัวอักษรเป็นภาษาอังกฤษ" />
                                 </div>

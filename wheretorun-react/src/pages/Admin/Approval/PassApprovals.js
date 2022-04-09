@@ -180,103 +180,49 @@ const PassApprovals = ({ history }) => {
                               </TableCell>
                               <TableCell>
                                 <div>
-                                  <h6>ชื่องาน</h6>
+                                  <h6>ชื่องานวิ่ง</h6>
                                 </div>
                               </TableCell>
-                              <TableCell>
-                                <div>
-                                  <h6>ไฟล์สำเนาบัตรประชาชน</h6>
-                                </div>
-                              </TableCell>
-                              <TableCell>
-                                <div>
-                                  <h6>ไฟล์งานวิ่ง</h6>
-                                </div>
-                              </TableCell>
+                              
                             </TableRow>
                           </TableHead>
-                          {/* <TableBody>
-                            {data.requestapprovals.nodes
-                              .slice(
-                                page * rowsPerPage,
-                                page * rowsPerPage + rowsPerPage
-                              )
-                              .map((requestapprovals) => (
-                                <TableRow hover role="checkbox" tabIndex={-1}>
-                                   <TableCell align="left">
-                                    <div>
-                                      <h6>
-                                        {requestapprovals.user.firstname}&nbsp;{requestapprovals.user.lastname}
-                                      </h6>
-                                    </div>
-                                  </TableCell>
-                                  <TableCell align="left">
-                                    <div>
-                                      <h6>
-                                        {requestapprovals.event.eventnameTh}
-                                      </h6>
-                                    </div>
-                                  </TableCell>
-                                  <TableCell align="left">
-                                    <div>
-                                      <h6>
-                                        {requestapprovals.fileIacard}
-                                      </h6>
-                                    </div>
-                                  </TableCell>
-                                  <TableCell>
-                                    <div>
-                                      <h6>
-                                        {requestapprovals.fileEvent}
-                                      </h6>
-                                    </div>
-                                  </TableCell>
-                                </TableRow>
-                              ))}  
-                          </TableBody> */}
+                         
 
 <TableBody>
-                            {data.uploads.nodes
+                            {data.requestapprovals.nodes
                               // .map((requestapprovals) => (
 
                               .slice(
                                 page * rowsPerPage,
                                 page * rowsPerPage + rowsPerPage
                               )
-                              .map((uploads) => (
+                              .map((requestapprovals) => (
                                 <TableRow hover role="checkbox" tabIndex={-1}>
                                   <TableCell align="left">
                                     <div>
                                       <h6>
-                                        {uploads.user.firstname}
-                                        &nbsp;{uploads.user.lastname}
+                                        {requestapprovals.user.firstname}
+                                        &nbsp;{requestapprovals.user.lastname}
                                       </h6>
                                     </div>
                                   </TableCell>
                                   <TableCell align="left">
                                     <div>
                                       <h6>
-                                        {uploads.event.eventnameTh}
-                                      </h6>
-                                    </div>
-                                  </TableCell>
-                                  <TableCell align="left">
-                                    <div>
-                                      <h6
-                                      // onClick={saveFile}
-                                      >
-                                        <a href={uploads.fileIacard} 
+                                        
+                                        <a href={requestapprovals.linkdrive} 
                                       download
                                       target="_blank"
                                       className={classes.flink}
                                       ><u>
-                                        {uploads.iacardName}
+                                        {requestapprovals.event.eventnameTh}
                                         </u>
                                         </a>
                                       </h6>
                                     </div>
                                   </TableCell>
-                                  <TableCell>
+                                  
+                                  {/* <TableCell>
                                     <div>
                                       <h6>
                                       <a href={uploads.fileEvent} 
@@ -289,7 +235,7 @@ const PassApprovals = ({ history }) => {
                                         </a>
                                       </h6>
                                     </div>
-                                  </TableCell>
+                                  </TableCell> */}
                                 </TableRow>
                               ))}
                           </TableBody>
@@ -305,7 +251,7 @@ const PassApprovals = ({ history }) => {
                         rowsPerPageOptions={[10, 25, 100]}
                         component="div"
                         // count={data.requestapprovals.totalCount}
-                        count={data.uploads.totalCount}
+                        count={data.requestapprovals.totalCount}
                         rowsPerPage={rowsPerPage}
                         page={page}
                         onPageChange={handleChangePage}

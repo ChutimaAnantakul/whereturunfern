@@ -1,11 +1,10 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { loader } from "graphql.macro";
 import { Link } from "react-router-dom";
-
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
-import TextField from "@material-ui/core/TextField";
+// import FormControl from '@material-ui/core/FormControl';
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
@@ -36,6 +35,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Cancel";
 // import CloseIcon from "@mui/icons-material/Close";
 import ImageIcon from "@mui/icons-material/Image";
+import { withSuccess } from "antd/lib/modal/confirm";
 
 //lodergrapghl
 const createEventgroupMutations = loader(
@@ -44,6 +44,30 @@ const createEventgroupMutations = loader(
 const eventGroupsQueries = loader("../../../graphql/queries/eventGroups.gql");
 
 const EventGroup = ({ history }) => {
+  const [eventgroupnameTh, seteventgroupnameTh] = React.useState("");
+  const [eventgroupnameEn, seteventgroupnameEn] = React.useState("");
+  const [eventGroupImageUrl, seteventGroupImageUrl] = React.useState("");
+  const [errors, setErrors] = React.useState(false);
+  const [setHelperText] = React.useState("Choose wisely");
+
+  const eventgroupnameThChange = (event) => {
+    seteventgroupnameTh(event.target.value);
+    setHelperText(" ");
+    setErrors(false);
+  };
+
+  const eventgroupnameEnChange = (event) => {
+    seteventgroupnameEn(event.target.value);
+    setHelperText(" ");
+    setErrors(false);
+  };
+
+  const eventGroupImageUrlChange = (event) => {
+    seteventGroupImageUrl(event.target.value);
+    setHelperText(" ");
+    setErrors(false);
+  };
+
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -72,15 +96,14 @@ const EventGroup = ({ history }) => {
   const eventgroupnameEnRef = useRef();
   const eventGroupImageUrlRef = useRef();
 
-  
- 
   const handleSubmit = async (e) => {
     if (
       eventgroupnameThRef.current.value === "" ||
       eventgroupnameEnRef.current.value === "" ||
       eventGroupImageUrlRef.current.value === ""
     ) {
-      return;
+      setHelperText("Please select an option!");
+      setErrors(true);
     } else {
       e.preventDefault();
 
@@ -98,7 +121,8 @@ const EventGroup = ({ history }) => {
           eventGroupImageUrl,
         },
       });
-
+      
+      alert(data);
       window.location.reload();
       history.push(`/eventgroup`);
     }
@@ -120,7 +144,7 @@ const EventGroup = ({ history }) => {
 
   return (
     <Box xs={12} sx={{ display: "flex" }}>
-      <Topbar />
+      {/* <Topbar /> */}
       <Sidebar />
       <Box
         component="main"
@@ -191,87 +215,92 @@ const EventGroup = ({ history }) => {
                     }}
                     fullWidth
                   >
-                    <form>
+                    <form onSubmit={handleSubmit} error={errors}>
+                      {/* <FormControl component="fieldset" error={errors} className={classes.formControl}> */}
                       {/* <Grid container spacing={3}> */}
-                        <br />
-                        <div className="form col-md-12"
-                        >
-                          <ListItem>
-                            <ListItemAvatar>
-                              <Avatar>
-                                <EventIcon />
-                              </Avatar>
-                            </ListItemAvatar>
-                            <div className="form col-md-12 ">
-                              <label>ชื่อกลุ่มงานวิ่ง (ภาษาไทย)</label>
-                              <input
-                                id="outlined-basic"
-                                label="ชื่อกลุ่มงานวิ่ง (ภาษาไทย)"
-                                variant="outlined"
-                                type="text"
-                                className="form-control"
-                                aria-describedby="emailHelp"
-                                placeholder="ชื่อกลุ่มงานวิ่ง (ภาษาไทย)"
-                                required
-                                fullWidth
-                                ref={eventgroupnameThRef}
-                      
-                              />
-                            </div>
-                          </ListItem>
-                        </div>
-                        <div className="form col-md-12"
-                        >
-                          <ListItem>
-                            <ListItemAvatar>
-                              <Avatar>
-                                <EventIcon />
-                              </Avatar>
-                            </ListItemAvatar>
-                            <div className="form col-md-12">
-                              <label>ชื่อกลุ่มงานวิ่ง (ภาษาอังกฤษ)</label>
-                              <input
-                                id="outlined-basic"
-                                label="ชื่อกลุ่มงานวิ่ง (ภาษาอังกฤษ)"
-                                // variant="outlined"
-                                type="text"
-                                className="form-control"
-                                aria-describedby="emailHelp"
-                                placeholder="ชื่อกลุ่มงานวิ่ง (ภาษาอังกฤษ)"
-                                required
-                                fullWidth
-                                ref={eventgroupnameEnRef}
-                                pattern="[A-Za-z0-9,():;* '%#<>_^|./\\s]*"
-                                title="กรุณากรอกตัวอักษรเป็นภาษาอังกฤษ"
-                              />
-                            </div>
-                          </ListItem>
-                        </div>
-                        <div className="form col-md-12"
-                        >
-                          <ListItem>
-                            <ListItemAvatar>
-                              <Avatar>
-                                <ImageIcon />
-                              </Avatar>
-                            </ListItemAvatar>
-                            <div className="form col-md-12">
-                              <label>รูปภาพ</label>
-                              <input
-                                id="outlined-basic"
-                                label="รูปภาพ"
-                                variant="outlined"
-                                type="text"
-                                className="form-control"
-                                aria-describedby="emailHelp"
-                                placeholder="รูปภาพ"
-                                required
-                                ref={eventGroupImageUrlRef}
-                                
-                              />
-                            </div>
-                          </ListItem>
-                        </div>
+                      <br />
+                      <div className="form col-md-12">
+                        <ListItem>
+                          <ListItemAvatar>
+                            <Avatar>
+                              <EventIcon />
+                            </Avatar>
+                          </ListItemAvatar>
+                          <div className="form col-md-11 ">
+                            <label>ชื่อกลุ่มงานวิ่ง (ภาษาไทย)</label>
+                            <input
+                              id="outlined-basic"
+                              // label="ชื่อกลุ่มงานวิ่ง (ภาษาไทย)"
+                              // variant="outlined"
+                              type="text"
+                              className="form-control"
+                              aria-describedby="emailHelp"
+                              placeholder="ชื่อกลุ่มงานวิ่ง (ภาษาไทย)"
+                              required
+                              fullWidth
+                              ref={eventgroupnameThRef}
+                              value={eventgroupnameTh}
+                              onChange={eventgroupnameThChange}
+                            />
+                          </div>
+                        </ListItem>
+                      </div>
+                      <div className="form col-md-12">
+                        <ListItem>
+                          <ListItemAvatar>
+                            <Avatar>
+                              <EventIcon />
+                            </Avatar>
+                          </ListItemAvatar>
+                          <div className="form col-md-11">
+                            <label>ชื่อกลุ่มงานวิ่ง (ภาษาอังกฤษ)</label>
+                            <input
+                              id="outlined-basic"
+                              // label="ชื่อกลุ่มงานวิ่ง (ภาษาอังกฤษ)"
+                              // variant="outlined"
+                              // value={eventgroupnameEnRef}
+                              type="text"
+                              className="form-control"
+                              aria-describedby="emailHelp"
+                              placeholder="ชื่อกลุ่มงานวิ่ง (ภาษาอังกฤษ)"
+                              required
+                              fullWidth
+                              ref={eventgroupnameEnRef}
+                              value={eventgroupnameEn}
+                              onChange={eventgroupnameEnChange}
+                              pattern="[A-Za-z0-9,():;*’ '%#<>_^|./\\s]*"
+                              title="กรุณากรอกตัวอักษรเป็นภาษาอังกฤษ"
+                            />
+                          </div>
+                        </ListItem>
+                      </div>
+                      <div className="form col-md-12">
+                        <ListItem>
+                          <ListItemAvatar>
+                            <Avatar>
+                              <ImageIcon />
+                            </Avatar>
+                          </ListItemAvatar>
+                          <div className="form col-md-11">
+                            <label>รูปภาพ</label>
+                            <input
+                              id="outlined-basic"
+                              // label="ชื่อกลุ่มงานวิ่ง (ภาษาไทย)"
+                              // variant="outlined"
+                              // value={eventGroupImageUrlRef}
+                              type="text"
+                              className="form-control"
+                              aria-describedby="emailHelp"
+                              required
+                              fullWidth
+                              ref={eventGroupImageUrlRef}
+                              value={eventGroupImageUrl}
+                              onChange={eventGroupImageUrlChange}
+                              placeholder="รูปภาพ"
+                            />
+                          </div>
+                        </ListItem>
+                      </div>
                       {/* </Grid> */}
                       <Grid
                         container
@@ -293,12 +322,13 @@ const EventGroup = ({ history }) => {
                           variant="contained"
                           type="submit"
                           color="primary"
-                          onClick={handleSubmit}
+                          // onClick={handleSubmit}
                         >
                           <SaveIcon />
                           &nbsp; save
                         </Button>
                       </Grid>
+                      {/* </FormControl> */}
                     </form>
                   </Card>
                 </Grid>

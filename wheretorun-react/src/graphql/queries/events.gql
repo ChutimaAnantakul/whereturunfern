@@ -37,10 +37,6 @@ query events(
         provinceTh
         provinceEn
       }
-      yearId
-      year {
-        year
-      }
       eventgroupId
     }
   }
@@ -118,3 +114,4 @@ query events(
     }
   }
 }
+

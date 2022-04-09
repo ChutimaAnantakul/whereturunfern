@@ -35,6 +35,9 @@ import DoneIcon from "@material-ui/icons/Done";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import CancelIcon from "@mui/icons-material/Cancel";
 
+//page
+import Navbar from "../pages/layout/Navbar";
+
 //graphql
 const requesteventQueries = loader(
   "../graphql/queries/requestevent.gql"

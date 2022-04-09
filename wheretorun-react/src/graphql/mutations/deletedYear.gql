@@ -1,8 +1,0 @@
-mutation deleteyear($id: UUID!) {
-  deleteYear(input: { id: $id }) {
-    year {
-      id
-      year
-    }
-  }
-}

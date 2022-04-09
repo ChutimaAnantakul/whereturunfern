@@ -11,7 +11,7 @@ mutation Editevent(
   $descriptionTh: String!
   $descriptionEn: String!
   $hashtag: String!
-  $yearId: UUID!
+  # $yearId: UUID!
   $organizer: String!
   $latitude: Float!
   $longitude: Float!
@@ -52,9 +52,9 @@ mutation Editevent(
         awardphoto: $awardphoto
         shirtsize: $shirtsize
         provinceId: $provinceId
-        yearId: $yearId
+        # yearId: $yearId
         eventgroupId: $eventgroupId
-        adminId: "21f40c16-44cb-4289-b3a2-16d9dd400d51"
+        adminId: "d776587c-f54c-4c09-8575-d46c23063b4c"
         status: true
       }
     }
@@ -82,9 +82,9 @@ mutation Editevent(
       shirtsize
       facebookurl
       provinceId
-      yearId
+      # yearId
       eventgroupId
-      adminId
+  
     }
   }
 }

@@ -1,22 +1,22 @@
-mutation createRequestapproval($eventId: UUID!, $fileIacard: String!, $fileEvent: String!) {
+mutation createRequestapproval($eventId: UUID!, $linkdrive: String!) {
   createRequestapproval(
     input: {
       requestapproval: {
         eventId: $eventId
-        fileIacard: $fileIacard
-        fileEvent: $fileEvent
+        linkdrive: $linkdrive
         status: false
-        userId: "59c6fb76-a68a-449d-95c2-ba408132f67d"
+        userId: "584b9232-a661-4b7b-98d3-5b0ab71efc78"
       }
     }
   ) {
     requestapproval {
         id
       eventId
-      fileIacard
-      fileEvent
+      linkdrive
       status
       userId
     }
   }
 }
+
+
