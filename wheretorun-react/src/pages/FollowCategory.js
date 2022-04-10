@@ -72,6 +72,7 @@ const FollowCategory = ({ history, match }) => {
 
     const classes = useStyles();
 
+// insert follow category
     const handleChangeStatus = async (event) => {
 
         // const id = IdRef.current.value;
@@ -85,24 +86,6 @@ const FollowCategory = ({ history, match }) => {
         // setfollow(event.target.checked)
         // setfollowName(event.target.checked);
         console.log(status, categoryId);
-        // const { data } = await createFollowCategory({
-        //     variables: {
-        //         //   id,
-        //         categoryId,
-        //         status,
-        //     },
-        // });
-    };
-
-
-    // insert follow category
-    const handleChangeFollowCategory = async (event) => {
-
-        // const id = IdRef.current.value;
-        // const categoryId = event.target.value;
-        // const categoryId = event.target.value;
-
-        // console.log(categoryId, status);
         const { data } = await createFollowCategory({
             variables: {
                 //   id,
@@ -110,9 +93,25 @@ const FollowCategory = ({ history, match }) => {
                 status,
             },
         });
-        history.push(`/followcate`);
-      window.location.reload();
     };
+
+
+    // const handleChangeFollowCategory = async (event) => {
+
+    //     const id = IdRef.current.value;
+    //     const categoryId = event.target.value;
+    //     const categoryId = event.target.value;
+
+    //     console.log(categoryId, status);
+    //     const { data } = await createFollowCategory({
+    //         variables: {
+    //             categoryId,
+    //             status,
+    //         },
+    //     });
+    //     history.push(`/followcate`);
+    //   window.location.reload();
+    // };
 
     //   const { id } = match.params;
     const { loading, error, data } = useQuery(followcategoriesQueries)
@@ -296,16 +295,16 @@ const FollowCategory = ({ history, match }) => {
                                                         Not Follow
                                                     </Button>
                                                 </Link>&nbsp;&nbsp;
-                                                {/* <Link to="/"> */}
+                                                <Link to="/">
                                                 <Button
                                                     variant="contained"
                                                     type="submit"
                                                     // onClick={handleSubmit}
-                                                    onClick={handleChangeFollowCategory}
+                                                    // onClick={handleChangeFollowCategory}
                                                 >
                                                     Follow
                                                 </Button>
-                                                {/* </Link> */}
+                                                </Link>
 
                                             </Grid>
                                             <Divider variant="inset" component="li" />

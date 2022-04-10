@@ -111,7 +111,7 @@ const CreatedCategoryEvent = ({ history }) => {
 
       const eventId = eventIdofcategoryRef.current.value;
       const categoryId = categoryIdRef.current.value;
-      console.log(eventId, categoryId);
+      // console.log(eventId, categoryId);
       const { data } = await createCategories({
         variables: {
           eventId,
@@ -147,30 +147,34 @@ const CreatedCategoryEvent = ({ history }) => {
 
   const classes = useStyles();
 
+
   function sendEmail(e) {
     e.preventDefault();
-    const check = categoryIdRef.current.value;
-    const ch = data.categories.nodes.map((categories) => categories.id);
-    for (let index = 0; index < ch.length; index++) {
-      if (ch[index] == check) {
-        const i = data.categories.nodes.map((categories) => categories.followcategory);
-        if (i[index].toString() == "true") {
-          emailjs.sendForm('service_j7djfxt', 'template_6wtm3i6', e.target, 'J0SPKCeWlRoIWQzC6')
-            .then((result) => {
-            },
-              (error) => {
-                console.log(error.text);
-              });
-          e.target.reset()
-        }
-        console.log(i[index])
-        // console.log(ch[index]+" : "+check)
-
-      } else {
-        const i = data.categories.nodes.map((categories) => categories.followcategory);
-        // console.log("dfsfsdf"+i[index])
-      }
-    }
+       const check = categoryIdRef.current.value;
+       const ch = data.followcategories.nodes.map((followcategories) => followcategories.category.id);
+       console.log(ch,check)
+       for (let index = 0; index < ch.length; index++) {
+          if (ch[index] == check) {
+            const i = data.followcategories.nodes.map((followcategories) => followcategories.status);
+            console.log(i)
+              if(i[index].toString()=="true"){
+                emailjs.sendForm('service_j7djfxt', 'template_6wtm3i6', e.target, 'J0SPKCeWlRoIWQzC6')
+                .then((result) => {
+                  console.log(result);
+                },
+                (error) => {
+                  console.log(error.text);
+                });
+              e.target.reset()
+              }
+            console.log(i[index])
+            // console.log(ch[index]+" : "+check)
+            
+          } else {
+           const i = data.followcategories.nodes.map((followcategories) => followcategories.status);
+           // console.log("dfsfsdf"+i[index])
+          }
+       }
   }
 
   const { error, loading, data } = useQuery(categoryEventQueries);
@@ -181,7 +185,7 @@ const CreatedCategoryEvent = ({ history }) => {
   if (error) {
     return "error";
   }
-  // console.log(data.categories.nodes.map((categories) => categories.followcategory))
+  // console.log(data.followcategories.nodes.map((followcategories) => followcategories.status))
 
   return (
     <Box sx={{ display: "flex" }}>

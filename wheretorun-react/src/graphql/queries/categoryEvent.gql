@@ -14,7 +14,17 @@ query categoryevmraceqwq {
       id
       categorynameTh
       categorynameEn
-      followcategory
+    }
+  }
+  followcategories{
+    nodes{
+      id
+      status
+      category{
+        id
+        categorynameTh
+        categorynameEn
+      }
     }
   }
   categoryevents(orderBy: EVENT_ID_ASC) {
